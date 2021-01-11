@@ -3,5 +3,5 @@ The main NanoPlay website. Coming soon! If you've recently received your NanoPla
 
 ## Development of NanoPlay site
 The development of this website is currently blocked due to the following requirements:
-* subModules (a JavaScript module management library) must exist and must be functional
+* ~~subModules (a JavaScript module management library) must exist and must be functional~~ Done!
 * subElements (a website templating framework) must exist and must be functional
