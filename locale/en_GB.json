@@ -1,0 +1,11 @@
+{
+    "name": "English (United Kingdom)",
+    "nameShort": "English",
+    "textDirection": "ltr",
+    "strings": {
+        "nanoplay": "NanoPlay",
+        "home": "Home",
+        "guides": "Guides",
+        "dashboard": "Dashboard"
+    }
+}

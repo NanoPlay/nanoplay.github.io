@@ -1,0 +1,28 @@
+<!--
+    NanoPlay Website
+
+    Copyright (C) Subnodal Technologies. All Rights Reserved.
+
+    https://nanoplay.subnodal.com
+    Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
+-->
+<a href="/" class="logo">
+    <img src="/media/logo.svg" alt="{{ _('nanoplay')}}" />
+</a>
+<span class="desktop">
+    <a href="/" class="{{ window.location.pathname == '/' ? 'selected' : '' }}" translate>home</a>
+    <a href="#" class="{{ window.location.pathname.startsWith('/guides') ? 'selected' : '' }}" translate>guides</a>
+    <div class="floatEnd">
+        <a href="#" translate>dashboard</a>
+    </div>
+</span>
+<span class="mobile">
+    <div class="floatEnd">
+        <a href="javascript:require('com.subnodal.nanoplay.website.nav').toggleMenu();" class="menuToggleButton"><icon>menu</icon></a>
+    </div>
+</span>
+<div class="menu">
+    <a href="/" class="{{ window.location.pathname == '/' ? 'selected' : '' }}" translate>home</a>
+    <a href="#" class="{{ window.location.pathname.startsWith('/guides') ? 'selected' : '' }}" translate>guides</a>
+    <a href="#" translate>dashboard</a>
+</div>
