@@ -179,11 +179,11 @@
        id="path-effect1863"
        is_visible="true"
        lpeversion="1"
-       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+       satellites_param="F,0,0,1,0,1.3229167,0,1 @ F,0,0,1,0,1.3229167,0,1 @ F,0,0,1,0,1.3229167,0,1"
        unit="px"
        method="auto"
        mode="F"
-       radius="0"
+       radius="5"
        chamfer_steps="1"
        flexible="false"
        use_knot_distance="true"
@@ -242,9 +242,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="214.60385"
-     inkscape:cy="282.49451"
+     inkscape:zoom="5.6"
+     inkscape:cx="480.71648"
+     inkscape:cy="582.77081"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -269,7 +269,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -398,7 +398,7 @@
          inkscape:original-d="m 122.76296,124.42939 c -0.68406,0.58976 -21.28422,7.13978 -21.28422,7.13978 l 16.75741,13.82811 1.02245,-4.88935 -8.49485,-7.07733 10.61602,-3.18082 z" />
       <path
          style="fill:url(#linearGradient1022);stroke:none;stroke-width:0.0911401px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 73.118421,140.99582 c 0,0 -0.506043,15.20796 17.000673,21.08182 17.506716,5.87386 21.261506,-7.77497 21.261506,-7.77497 z"
+         d="m 73.175991,142.3169 c 0.328391,3.71102 2.439542,14.28625 15.697494,19.31597 0.682974,0.2591 1.806404,0.63619 2.507471,0.84175 13.247954,3.88443 18.135554,-3.81204 19.531034,-6.93607 0.29772,-0.6665 -0.0908,-1.43044 -0.7809,-1.67043 L 74.367929,141.43037 c -0.690084,-0.23999 -1.256312,0.15907 -1.191938,0.88653 z"
          id="path1838"
          sodipodi:nodetypes="cscc"
          inkscape:path-effect="#path-effect1863"
