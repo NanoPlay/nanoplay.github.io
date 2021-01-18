@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+    NanoPlay Website
+
+    Copyright (C) Subnodal Technologies. All Rights Reserved.
+
+    https://nanoplay.subnodal.com
+    Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
+-->
+<html>
+    <head>
+        <title>NanoPlay</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="/media/square.png">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca&family=Material+Icons&display=swap">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.subnodal.com/lib/submodules.min.js"></script>
+        <script src="https://cdn.subnodal.com/lib/subelements.min.js"></script>
+        <script src="/models/nav.js"></script>
+        <script src="/script.js"></script>
+    </head>
+    <body hidden>
+        <nav s-import="/models/nav.html"></nav>
+        <main>
+            <div class="split">
+                <div>
+                    <img src="media/art/bluuyello.svg" alt="" class="art" />
+                </div>
+                <div class="alignMiddle">
+                    <h1>Let's go!</h1>
+                    <p>Sign in with your Subnodal Account to get coding! Your code, apps, settings and more will all be stored with your Subnodal Account for you to access from anywhere.</p>
+                    <p>Don't have a Subnodal Account yet? Signing up is free and easy!</p>
+                    <iframe src="https://accounts.subnodal.com/embed.html?platform=nanoplay&locale={{ l10n.getLocaleCode() }}" class="subnodalAccountsButton"></iframe>
+                </div>
+            </div>
+        </main>
+        <footer s-import="/models/footer.html"></footer>
+    </body>
+</html>
