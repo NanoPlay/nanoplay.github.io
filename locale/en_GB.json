@@ -6,6 +6,10 @@
         "nanoplay": "NanoPlay",
         "home": "Home",
         "guides": "Guides",
-        "dashboard": "Dashboard"
+        "dashboard": "Dashboard",
+
+        "signIn_title": "Let's go!",
+        "signIn_description": "Sign in with your Subnodal Account to get coding! Your code, apps, settings and more will all be stored with your Subnodal Account for you to access from anywhere.",
+        "signIn_signUpHint": "Don't have a Subnodal Account yet? Signing up is free and easy!"
     }
 }
