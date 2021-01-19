@@ -77,7 +77,7 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
                         break;
                     
                     default:
-                        reject({message: error.message, code: logic.errorCodes.UNKNOWN});
+                        reject({message: error.message, code: exports.errorCodes.UNKNOWN});
                         break;
                 }
             })
@@ -109,8 +109,6 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
 
                 triggerUserChangeListeners(true, currentUser.username == null);
             });
-
-            triggerUserChangeListeners(true, false);
         } else {
             currentUser.uid = null;
             currentUser.username = null;

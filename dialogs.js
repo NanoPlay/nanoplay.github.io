@@ -20,7 +20,7 @@ namespace("com.subnodal.nanoplay.website.dialogs", function(exports) {
 
     exports.closeAll = function() {
         for (var i = 0; i < document.getElementsByTagName("dialog").length; i++) {
-            exports.closeDialog(document.getElementsByTagName("dialog")[i].id);
+            exports.close(document.getElementsByTagName("dialog")[i].id);
         }
     };
 
