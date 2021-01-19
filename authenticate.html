@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="/media/square.png">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Deca&family=Material+Icons&display=swap">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/style.css">
         <script src="https://cdn.subnodal.com/lib/submodules.min.js"></script>
         <script src="https://cdn.subnodal.com/lib/subelements.min.js"></script>
         <script src="https://cdn.subnodal.com/lib/submodules.min.js"></script>
@@ -27,9 +27,18 @@
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
         <script src="/script.js"></script>
         <script src="/resources.js"></script>
+        <script src="/dialogs.js"></script>
         <script src="/authenticate.js"></script>
     </head>
     <body hidden>
-        <p>Authenticating...</p>
+        <loader class="entireScreen"></loader>
+        <dialog width="200px" height="100px" id="authError">
+            <div class="dialogContent">
+                <p translate>authError</p>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="window.location.replace('/');" class="red" translate>ok</button>
+            </div>
+        </dialog>
     </body>
 </html>

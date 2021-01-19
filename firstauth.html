@@ -25,13 +25,14 @@
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-functions.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
-        <script src="/models/nav.js"></script>
         <script src="/script.js"></script>
         <script src="/resources.js"></script>
+        <script src="/firstauth.js"></script>
     </head>
     <body hidden>
-        <nav s-import="/models/nav.html"></nav>
-        <main>Hello, world!</main>
-        <footer s-import="/models/footer.html"></footer>
+        <p>First auth getting started guide coming soon!</p>
+        <p>A basic intro to using the NanoPlay will appear here, and we'll also ask you to accept our Community Rules.</p>
+        <p>But for now, we need to know what you want to be known as on the platform:</p>
+        <input placeholder="Enter a username" id="username"> <button onclick="require('com.subnodal.nanoplay.website.firstauth').finishSetup();">Finish setup</button>
     </body>
 </html>

@@ -117,10 +117,157 @@ h1 {
     font-size: 2em;
 }
 
+button {
+    padding: 10px;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: var(--blue);
+    color: var(--blueText);
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    opacity: 1;
+    cursor: pointer;
+    transition: 1s box-shadow, 1s opacity;
+    outline: none;
+}
+
+button:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+}
+
+button:active {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+button.red {
+    background-color: var(--red);
+    color: var(--redText);
+}
+
+button.green {
+    background-color: var(--green);
+    color: var(--greenText);
+}
+
+button.blue {
+    background-color: var(--blue);
+    color: var(--blueText);
+}
+
+button.orange {
+    background-color: var(--orange);
+    color: var(--orangeText);
+}
+
 iframe {
     width: 100%;
     height: 300px;
     border: none;
+}
+
+loader {
+    position: relative;
+    display: block;
+    width: calc(2em * 2);
+    height: calc(2em * 2);
+    margin: calc(0.5em + 5px) auto;
+    color: var(--blue);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 10px;
+    -moz-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+loader::before, loader::after {
+    position: absolute;
+    content: "";
+}
+
+loader::before {
+    left: -2.5px;
+    width: calc(2em + 5px);
+    height: calc(calc(2em * 2) + 5px);
+    background-color: var(--background);
+    border-radius: calc(calc(2em * 2) + 5px) 0 0 calc(calc(2em * 2) + 5px);
+    -moz-transform-origin: calc(2em + 5px) calc(2em + 1px);
+    -webkit-transform-origin: calc(2em + 5px) calc(2em + 1px);
+    transform-origin: calc(2em + 5px) calc(2em + 1px);
+    -moz-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -moz-animation: spinner 2s infinite ease 1.5s;
+    -webkit-animation: spinner 2s infinite ease 1.5s;
+    animation: spinner 2s infinite ease 1.5s;
+}
+
+loader::after {
+    left: calc(2em - 2.5px);
+    width: calc(2em + 5px);
+    height: calc(calc(2em * 2) + 5px);
+    background-color: var(--background);
+    border-radius: 0 calc(calc(2em * 2) + 5px) calc(calc(2em * 2) + 5px) 0;
+    -moz-transform-origin: 0 calc(2em + 1px);
+    -webkit-transform-origin: 0 calc(2em + 1px);
+    transform-origin: 0 calc(2em + 1px);
+    -moz-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -moz-animation: spinner 2s infinite ease;
+    -webkit-animation: spinner 2s infinite ease;
+    animation: spinner 2s infinite ease;
+}
+
+loader.entireScreen {
+    margin-top: calc(50vh - 4em);
+}
+
+dialog {
+    position: fixed;
+    display: none;
+    top: calc(50vh - 100px);
+    left: calc(50vw - 250px);
+    width: 500px;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    overflow: auto;
+}
+
+[dir="rtl"] dialog {
+    left: unset;
+    right: calc(50vw - 250px);
+}
+
+dialog[open] {
+    display: block;
+}
+
+dialog .dialogContent {
+    height: 135px;
+    padding: 1em;
+    overflow: auto;
+}
+
+dialog .dialogContent > *:first-child {
+    margin-top: 0;
+}
+
+dialog .dialogButtons {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: end;
 }
 
 .desktop { 
@@ -153,12 +300,32 @@ iframe {
     width: 100%;
 }
 
+.dialogBackground {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+dialog[open] ~ .dialogBackground {
+    display: block;
+}
+
 .subnodalAccountsButton {
     width: 250px;
     height: 50px;
 }
 
-/* Media queries */
+@media (max-width: 550px) {
+    dialog {
+        left: 5vw;
+        width: 90vw;
+    }
+}
 
 @media (max-width: 500px) {
     .desktop {
@@ -171,6 +338,48 @@ iframe {
 
     .split > * {
         flex-basis: 100%;
+    }
+}
+
+@-moz-keyframes spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(-180deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(180deg);
     }
 }
 
@@ -191,5 +400,4 @@ icon {
     word-wrap: normal;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
-  }
-  
+}

@@ -25,13 +25,13 @@
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-functions.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
-        <script src="/models/nav.js"></script>
         <script src="/script.js"></script>
         <script src="/resources.js"></script>
+        <script src="/dashboard/dashboard.js"></script>
     </head>
     <body hidden>
-        <nav s-import="/models/nav.html"></nav>
-        <main>Hello, world!</main>
-        <footer s-import="/models/footer.html"></footer>
+        <s-if condition="{{ resources.getCurrentUser().username != null }}">
+            <p>Hello, {{ resources.getCurrentUser().username }}!</p>
+        </s-if>
     </body>
 </html>

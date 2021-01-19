@@ -10,6 +10,10 @@
 
         "signIn_title": "Let's go!",
         "signIn_description": "Sign in with your Subnodal Account to get coding! Your code, apps, settings and more will all be stored with your Subnodal Account for you to access from anywhere.",
-        "signIn_signUpHint": "Don't have a Subnodal Account yet? Signing up is free and easy!"
+        "signIn_signUpHint": "Don't have a Subnodal Account yet? Signing up is free and easy!",
+
+        "authError": "Sorry, we ran into a problem when signing you in. Please try again later.",
+
+        "ok": "OK"
     }
 }
