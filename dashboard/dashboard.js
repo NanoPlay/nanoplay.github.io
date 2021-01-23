@@ -12,12 +12,10 @@ namespace("com.subnodal.nanoplay.website.dashboard", function(exports) {
     var resources = require("com.subnodal.nanoplay.website.resources");
 
     resources.registerUserChangeListener(function(isSignedIn, isNewUser) {
-        subElements.ready(function() {
-            if (!isSignedIn) {
-                window.location.replace("/signin.html");
-            } else if (isNewUser) {
-                window.location.replace("/firstauth.html");
-            }
-        });
+        if (!isSignedIn) {
+            window.location.replace("/signin.html");
+        } else if (isNewUser) {
+            window.location.replace("/firstauth.html");
+        }
     });
 });
