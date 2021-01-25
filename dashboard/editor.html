@@ -45,14 +45,14 @@
         </main>
         <dialog class="big" id="appSettings">
             <div class="dialogContent">
-                <h2>App settings</h2>
+                <h2 translate>editor_appSettings</h2>
                 <label>
-                    <span>App name</span>
+                    <span translate>editor_appName</span>
                     <input id="appNameInput">
                 </label>
                 <label>
                     <span></span>
-                    <span><a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppNamesDialog();"><icon aria-hidden="true">translate</icon> Translate this</a></span>
+                    <span><a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppNamesDialog();"><icon aria-hidden="true">translate</icon> {{ _('editor_translateThis') }}</a></span>
                 </label>
             </div>
             <div class="dialogButtons">
@@ -61,14 +61,14 @@
         </dialog>
         <dialog class="big" id="appNameTranslate">
             <div class="dialogContent">
-                <h2>Translate app name</h2>
+                <h2 translate>editor_translateAppName</h2>
                 <label>
                     <span>English (UK)</span>
-                    <input placeholder="(No translation)" data-lang="en_GB" class="translateAppNameInput">
+                    <input placeholder="{{ _('editor_noTranslation') }}" data-lang="en_GB" class="translateAppNameInput">
                 </label>
                 <label>
                     <span>Français (France)</span>
-                    <input placeholder="(No translation)" data-lang="fr_FR" class="translateAppNameInput">
+                    <input placeholder="{{ _('editor_noTranslation') }}" data-lang="fr_FR" class="translateAppNameInput">
                 </label>
             </div>
             <div class="dialogButtons">

@@ -17,6 +17,10 @@
         "editor_saveApp": "Save this app",
         "editor_seeApps": "See your apps",
         "editor_appSettings": "App settings",
+        "editor_appName": "App name",
+        "editor_translateThis": "Translate this",
+        "editor_translateAppName": "Translate app name",
+        "editor_noTranslation": "(No translation)",
 
         "toggleDarkMode": "Toggle dark mode",
         "backToDashboard": "Back to dashboard",
