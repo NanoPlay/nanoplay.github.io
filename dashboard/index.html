@@ -28,9 +28,12 @@
         <script src="/dashboard/dashboard.js"></script>
     </head>
     <body hidden>
-        <s-if condition="{{ resources.getCurrentUser().username != null }}">
-            <p>Hello, {{ resources.getCurrentUser().username }}!</p>
-            <p><a href="/dashboard/editor.html">Go to editor</a></p>
-        </s-if>
+        <nav s-import="/models/dashboardnav.html" class="dashboard"></nav>
+        <main>
+            <s-if condition="{{ resources.getCurrentUser().username != null }}">
+                <p>Hello, {{ resources.getCurrentUser().username }}!</p>
+                <p><a href="/dashboard/editor.html">Go to editor</a></p>
+            </s-if>
+        </main>
     </body>
 </html>

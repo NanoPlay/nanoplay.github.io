@@ -11,7 +11,11 @@
 </a>
 <div class="floatEnd">
     <a href="javascript:require('com.subnodal.nanoplay.website.dashboard').toggleTheme();" title="{{ _('toggleDarkMode') }}" aria-label="{{ _('toggleDarkMode') }}" id="darkThemeButton"><icon>dark_mode</icon></a>
-    <a href="#" title="{{ _('editor_saveApp') }}" aria-label="{{ _('editor_saveApp') }}"><icon>save</icon></a>
-    <a href="#" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
-    <a href="/dashboard" title="{{ _('backToDashboard') }}" aria-label="{{ _('backToDashboard') }}"><icon>apps</icon></a>
+    <s-if condition="{{ window.location.pathname == '/dashboard/editor.html' }}">
+        <a href="#" title="{{ _('editor_saveApp') }}" aria-label="{{ _('editor_saveApp') }}"><icon>save</icon></a>
+        <a href="#" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
+    </s-if>
+    <s-if condition="{{ window.location.pathname != '/dashboard' }}">
+        <a href="/dashboard" title="{{ _('backToDashboard') }}" aria-label="{{ _('backToDashboard') }}"><icon>apps</icon></a>
+    </s-if>
 </div>
