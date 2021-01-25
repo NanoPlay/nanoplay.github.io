@@ -44,8 +44,25 @@ input:not([type="checkbox"]):focus {
 
 body {
     margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
     font-size: 20px;
     font-family: "Lexend Deca", sans-serif;
+}
+
+body.dark {
+    --background: #0c2435;
+    --foreground: white;
+    --shade: #123955;
+    --shadeText: white;
+    --red: #e0607e;
+    --redText: white;
+    --green: #7fb069;
+    --greenText: white;
+    --blue: #42aaf5;
+    --blueText: white;
+    --orange: #f5b342;
+    --orangeText: white;
 }
 
 nav {

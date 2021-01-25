@@ -24,39 +24,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         name: {}
     };
 
-    subElements.ready(function() {
-        requests.getJson("https://subnodal.com/csEngine/languages/js.json").then(function(languageData) {
-            cseInstance = new csengine.CodeslateEngine(document.getElementById("codeEditor"), {
-                languageData: languageData,
-                theme: {
-                    codeFont: `"Overpass Mono", "Roboto Mono", monospace`,
-                    uiFont: `"Lexend Deca", sans-serif`,
-                    background: "#eeeeee",
-                    gutter: "#cccccc",
-                    lineNumber: "#222222",
-                    lineNumberIndent: "black",
-                    caret: "#e0607e",
-                    scrollbar: "rgba(0, 0, 0, 0.5)",
-                    scrollbarHover: "rgba(0, 0, 0, 0.6)",
-                    scrollbarPressed: "rgba(0, 0, 0, 0.8)",
-                    selection: "#a2d5fa",
-                    text: "black",
-                    definition: "#42aaf5; font-weight: bold;",
-                    keyword: "#42aaf5",
-                    string: "#7fb069",
-                    number: "#e0607e",
-                    operator: "#f5b342",
-                    atom: "#f5b342",
-                    comment: "#cccccc; font-style: italic;",
-                    regex: "#e0607e"
-                }
-            });
-
-            cseInstance.onReady(function() {
-                cseInstance.code = `function start() {\n    \n}\n\nfunction loop() {\n    \n}`;
-            });
-        });
-    });
+    var lightTheme = null;
+    var darkTheme = null;
+    var wasOnDarkTheme = false;
 
     exports.getManifest = function() {
         return manifest;
@@ -101,4 +71,38 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
         exports.loadAppSettingsDialog();
     };
+
+    subElements.ready(function() {
+        Promise.all([
+            requests.getJson("https://subnodal.com/csEngine/languages/js.json"),
+            requests.getJson("/csethemes/light.json"),
+            requests.getJson("/csethemes/dark.json")
+        ]).then(function(editorResources) {
+            lightTheme = editorResources[1];
+            darkTheme = editorResources[2];
+
+            cseInstance = new csengine.CodeslateEngine(document.getElementById("codeEditor"), {
+                languageData: editorResources[0],
+                theme: lightTheme
+            });
+
+            cseInstance.onReady(function() {
+                cseInstance.code = `function start() {\n    \n}\n\nfunction loop() {\n    \n}`;
+            });
+
+            setInterval(function() {
+                if (wasOnDarkTheme != document.body.classList.contains("dark")) {
+                    wasOnDarkTheme = document.body.classList.contains("dark");
+
+                    if (wasOnDarkTheme) {
+                        cseInstance.options.theme = darkTheme;
+                    } else {
+                        cseInstance.options.theme = lightTheme;
+                    }
+
+                    cseInstance.render();
+                }
+            });
+        });
+    });
 });
