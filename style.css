@@ -461,6 +461,16 @@ dialog[open] ~ .dialogBackground {
     height: 50px;
 }
 
+.qrCode {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+body.dark .qrCode {
+    filter: contrast(0) brightness(5);
+}
+
 .code {
     border-radius: 10px;
     overflow: hidden;

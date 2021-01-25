@@ -114,6 +114,12 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     exports.connectToNewNanoplay = function() {
         status = exports.statuses.CONNECTING;
 
+        if (!navigator.bluetooth) {
+            dialogs.open("noBluetooth");
+
+            return;
+        }
+
         communications.connectToNewNanoplay().then(function() {
             status = exports.statuses.CONNECTED;
             unsuccessfulConnections = 0;

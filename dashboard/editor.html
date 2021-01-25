@@ -83,13 +83,24 @@
                 <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppNamesDialog();" class="green" translate>done</button>
             </div>
         </dialog>
+        <dialog class="big" id="noBluetooth">
+            <div class="dialogContent">
+                <p translate>editor_noBluetooth</p>
+                <div class="middle">
+                    <img src="/media/qrcode.svg" alt="{{ _('editor_noBluetoothQrCode') }}" title="{{ _('editor_noBluetoothQrCode') }}" class="qrCode" />
+                </div>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="blue" translate>ok</button>
+            </div>
+        </dialog>
         <dialog id="connectionError">
             <div class="dialogContent">
                 <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getUnsuccessfulConnections() > 2 }}">
                     <p>{{ _('editor_connectionErrorPersistent') }} <a href="javascript:window.location.reload();" translate>editor_connectionErrorPersistentLink</a></p>
                 </s-if>
                 <s-else>
-                    <p>Looks like we couldn't connect to your NanoPlay! Try connecting again.</p>
+                    <p translate>editor_connectionError</p>
                 </s-else>
             </div>
             <div class="dialogButtons">

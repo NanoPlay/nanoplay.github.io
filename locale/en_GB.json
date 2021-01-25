@@ -26,6 +26,8 @@
         "editor_connectionError": "Looks like we couldn't connect to your NanoPlay! Try connecting again.",
         "editor_connectionErrorPersistent": "Looks like we still can't connect to your NanoPlay!",
         "editor_connectionErrorPersistentLink": "Try refreshing the page instead.",
+        "editor_noBluetooth": "No Bluetooth? Don't worry! Visit the NanoPlay editor on your mobile phone to connect to your NanoPlay.",
+        "editor_noBluetoothQrCode": "Point your phone's camera at this QR code to quickly visit the NanoPlay editor",
 
         "editor_status_disconnected": "Disconnected",
         "editor_status_connecting": "Connecting...",
