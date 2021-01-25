@@ -254,6 +254,11 @@ input {
     outline: none;
 }
 
+button:disabled, input:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 label {
     display: block;
     padding-top: 5px;
@@ -367,7 +372,7 @@ dialog .dialogContent {
     overflow: auto;
 }
 
-dialog .dialogContent > *:first-child {
+dialog .dialogContent > *:first-child, dialog .dialogContent p:first-of-type {
     margin-top: 0;
 }
 
@@ -480,8 +485,31 @@ dialog[open] ~ .dialogBackground {
     vertical-align: middle;
 }
 
+#editorAppName button {
+    float: right;
+}
+
+[dir="rtl"] #editorAppName button {
+    float: left;
+}
+
 #codeEditor {
-    height: calc(100vh - 8em);
+    height: calc(100vh - 8.4em);
+}
+
+#editorStatus {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0.2em;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: var(--shade);
+    color: var(--shadeText);
+    font-size: 0.8em;
+    overflow: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 @media (max-width: 650px) {

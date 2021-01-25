@@ -21,6 +21,19 @@
         "editor_translateThis": "Translate this",
         "editor_translateAppName": "Translate app name",
         "editor_noTranslation": "(No translation)",
+        "editor_sendToNanoplay": "Send to NanoPlay",
+        "editor_connecting": "Connecting...",
+        "editor_connectionError": "Looks like we couldn't connect to your NanoPlay! Try connecting again.",
+        "editor_connectionErrorPersistent": "Looks like we still can't connect to your NanoPlay!",
+        "editor_connectionErrorPersistentLink": "Try refreshing the page instead.",
+
+        "editor_status_disconnected": "Disconnected",
+        "editor_status_connecting": "Connecting...",
+        "editor_status_connected_singular": "Connected to {name}",
+        "editor_status_connected_plural": {
+            "{count} == 1": "Connected to {count} NanoPlay",
+            "{count} == 2": "Connected to {count} NanoPlays"
+        },
 
         "toggleDarkMode": "Toggle dark mode",
         "backToDashboard": "Back to dashboard",

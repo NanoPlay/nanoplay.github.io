@@ -7,22 +7,30 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-var csengine = require("com.subnodal.codeslate.engine");
-
 namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var subElements = require("com.subnodal.subelements");
     var requests = require("com.subnodal.subelements.requests");
     var l10n = require("com.subnodal.subelements.l10n");
     var csengine = require("com.subnodal.codeslate.engine");
+    var _ = l10n.translate;
 
     var dialogs = require("com.subnodal.nanoplay.website.dialogs");
+    var communications = require("com.subnodal.nanoplay.website.communications");
 
     const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
+
+    exports.statuses = {
+        DISCONNCTED: 0,
+        CONNECTING: 1,
+        CONNECTED: 2
+    };
 
     var cseInstance = null;
     var manifest = {
         name: {}
     };
+    var status = 0;
+    var unsuccessfulConnections = 0;
 
     var lightTheme = null;
     var darkTheme = null;
@@ -34,6 +42,37 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
     exports.getSupportedLanguage = function() {
         return SUPPORTED_LANGUAGES.includes(l10n.getLocaleCode()) ? l10n.getLocaleCode() : "en_GB";
+    };
+
+    exports.getStatus = function() {
+        return status;
+    };
+
+    exports.getStatusMessage = function() {
+        switch (status) {
+            case exports.statuses.CONNECTING:
+                return _("editor_status_connecting");
+            case exports.statuses.CONNECTED:
+                if (communications.getConnectedNanoplayCount() > 1) {
+                    return _("editor_status_connected_plural", {count: communications.getConnectedNanoplayCount()});
+                } else {
+                    return _("editor_status_connected_singular", {name: communications.getConnectedNanoplayNames()[0]});
+                }
+            default:
+                return _("editor_status_disconnected");
+        }
+    };
+
+    exports.setStatusGeneric = function() {
+        if (communications.getConnectedNanoplayCount() > 0) {
+            status = exports.statuses.CONNECTED;
+        } else {
+            status = exports.statuses.DISCONNCTED;
+        }
+    };
+
+    exports.getUnsuccessfulConnections = function() {
+        return unsuccessfulConnections;
     };
 
     exports.loadAppSettingsDialog = function() {
@@ -70,6 +109,35 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         dialogs.close("appNameTranslate");
 
         exports.loadAppSettingsDialog();
+    };
+
+    exports.connectToNewNanoplay = function() {
+        status = exports.statuses.CONNECTING;
+
+        communications.connectToNewNanoplay().then(function() {
+            status = exports.statuses.CONNECTED;
+            unsuccessfulConnections = 0;
+
+            subElements.render();
+        }).catch(function(error) {
+            console.error(error);
+
+            status = exports.setStatusGeneric();
+            unsuccessfulConnections++;
+
+            dialogs.open("connectionError");
+            subElements.render();
+        });
+
+        subElements.render();
+    };
+
+    exports.ensureConnection = function() {
+        if (communications.getConnectedNanoplayCount() > 0) {
+            return Promise.resolve();
+        } else {
+            return exports.connectToNewNanoplay();
+        }
     };
 
     subElements.ready(function() {

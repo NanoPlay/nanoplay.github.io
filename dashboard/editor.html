@@ -30,6 +30,7 @@
         <script src="/dialogs.js"></script>
         <script src="/dashboard/dashboard.js"></script>
         <script src="/dashboard/editor.js"></script>
+        <script src="/dashboard/communications.js"></script>
     </head>
     <body hidden>
         <nav s-import="/models/dashboardnav.html" class="dashboard"></nav>
@@ -37,12 +38,19 @@
             <h2 id="editorAppName">
                 <span onclick="require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" class="editable">App Name</span>
                 <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
+                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.CONNECTING }}">
+                    <button disabled class="green" translate>editor_connecting</button>
+                </s-if>
+                <s-else>
+                    <button onclick="require('com.subnodal.nanoplay.website.editor').ensureConnection();" class="green" translate>editor_sendToNanoplay</button>
+                </s-else>
             </h2>
             <div class="split">
                 <div class="code" id="codeEditor"></div>
                 <div>Simulator coming soon!</div>
             </div>
         </main>
+        <div id="editorStatus">{{ require("com.subnodal.nanoplay.website.editor").getStatusMessage() }}</div>
         <dialog class="big" id="appSettings">
             <div class="dialogContent">
                 <h2 translate>editor_appSettings</h2>
@@ -73,6 +81,19 @@
             </div>
             <div class="dialogButtons">
                 <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppNamesDialog();" class="green" translate>done</button>
+            </div>
+        </dialog>
+        <dialog id="connectionError">
+            <div class="dialogContent">
+                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getUnsuccessfulConnections() > 2 }}">
+                    <p>{{ _('editor_connectionErrorPersistent') }} <a href="javascript:window.location.reload();" translate>editor_connectionErrorPersistentLink</a></p>
+                </s-if>
+                <s-else>
+                    <p>Looks like we couldn't connect to your NanoPlay! Try connecting again.</p>
+                </s-else>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>ok</button>
             </div>
         </dialog>
     </body>

@@ -10,21 +10,13 @@ namespace("com.subnodal.nanoplay.website.dashboard", function(exports) {
     var subElements = require("com.subnodal.subelements");
 
     var resources = require("com.subnodal.nanoplay.website.resources");
+    
+    var darkThemeEnabled = false;
 
     exports.toggleTheme = function() {
-        var wasDarkTheme = document.body.classList.contains("dark");
-
-        if (wasDarkTheme) {
-            document.body.classList.remove("dark");
-            localStorage.setItem("darkTheme", "false");
-
-            document.querySelector("#darkThemeButton icon").innerText = "dark_mode";
-        } else {
-            document.body.classList.add("dark");
-            localStorage.setItem("darkTheme", "true");
-
-            document.querySelector("#darkThemeButton icon").innerText = "light_mode";
-        }
+        darkThemeEnabled = !darkThemeEnabled;
+        
+        localStorage.setItem("darkTheme", String(darkThemeEnabled));
     };
 
     resources.registerUserChangeListener(function(isSignedIn, isNewUser) {
@@ -37,7 +29,19 @@ namespace("com.subnodal.nanoplay.website.dashboard", function(exports) {
 
     subElements.ready(function() {
         if (localStorage.getItem("darkTheme") == "true") {
-            exports.toggleTheme();
+            darkThemeEnabled = true;
         }
+
+        setInterval(function() {
+            if (darkThemeEnabled) {
+                document.body.classList.remove("dark");
+    
+                document.querySelector("#darkThemeButton icon").innerText = "dark_mode";
+            } else {
+                document.body.classList.add("dark");
+    
+                document.querySelector("#darkThemeButton icon").innerText = "light_mode";
+            }
+        });
     });
 });
