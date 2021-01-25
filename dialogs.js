@@ -12,6 +12,8 @@ namespace("com.subnodal.nanoplay.website.dialogs", function(exports) {
 
     exports.open = function(dialogId) {
         document.getElementById(dialogId).setAttribute("open", "");
+
+        document.querySelector("dialog[open] input, dialog[open] button").focus();
     };
 
     exports.close = function(dialogId) {

@@ -1,37 +1,104 @@
+/*
+    NanoPlay Website
+
+    Copyright (C) Subnodal Technologies. All Rights Reserved.
+
+    https://nanoplay.subnodal.com
+    Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
+*/
+
 var csengine = require("com.subnodal.codeslate.engine");
 
 namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var subElements = require("com.subnodal.subelements");
+    var requests = require("com.subnodal.subelements.requests");
+    var l10n = require("com.subnodal.subelements.l10n");
     var csengine = require("com.subnodal.codeslate.engine");
 
+    var dialogs = require("com.subnodal.nanoplay.website.dialogs");
+
+    const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
+
     var cseInstance = null;
+    var manifest = {
+        name: {}
+    };
 
     subElements.ready(function() {
-        cseInstance = new csengine.CodeslateEngine(document.getElementById("codeEditor"), {
-            languageData: {
-                syntax: [
-                    {type: "comment", regex: `(?<=^(?:[\x03\x05].*?\x04)*[^\x03\x04\x05\n]*)(\\/\\/.*?)\\n`, flags: "m"},
-                    {type: "string", regex: `(?<!\\/\\*)"(?![^\\/]*\\*\\/)(?:[^"\\\\\x04]|\\\\.)*?"`, spellcheck: true},
-                    {type: "string", regex: `(?<!\\/\\*)'(?![^\\/]*\\*\\/)(?:[^'\\\\\x04]|\\\\.)*'`, spellcheck: true},
-                    {type: "string", regex: `(?<!\\/\\*)\`(?![^\\/]*\\*\\/)(?:[^\`\\\\\x04]|\\\\.)*\``, spellcheck: true, flags: "s"},
-                    {type: "comment", regex: `\\/\\*.*?\\*\\/`, flags: "s"},
-                    {type: "regex", regex: `(?<!\\/\\*)(?<=[\\(\\[\\n\\!\\?\\:\\|\\=])\\s*\\/(?![^\\/]*\\*\\/)(?:[^\\/\\\\\x04\\n]|\\\\.)*?\\/`},
-                    {type: "definition", regex: `\\b(function|var|const|let|class|async|await|=>)\\b`},
-                    {type: "keyword", regex: `\\b(if|else|for|in|do|while|try|catch|finally|break|continue|return|with|yield|new|typeof|instanceof|delete|import|export)\\b`},
-                    {type: "number", regex: `\\b(?<!\\$)0(x|X)[0-9a-fA-F]+n?\\b(?!\\$)`}, // Hex
-                    {type: "number", regex: `\\b(?<!\\$)0(b|B)[01]+n?\\b(?!\\$)`}, // Bin
-                    {type: "number", regex: `\\b(?<!\\$)0(o|O)?[0-7]+n?\\b(?!\\$)`}, // Oct
-                    {type: "number", regex: `\\b(?<!\\$)(?:(?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)(?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|(?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|(?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|(?:\\b[0-9]+(\\.)[0-9]+\\b)|(?:\\b[0-9]+(\\.)\\B)|(?:\\B(\\.)[0-9]+\\b)|(?:\\b[0-9]+n?\\b(?!\\.)))(?!\\$)`},
-                    {type: "atom", regex: `\\b(true|false|null|undefined|NaN|Infinity)\\b`},
-                    {type: "operator", regex: `(\\+\\+|--|\\+|-|\\*|\\/|%|===|==|!==|!=|\\+=|-=|\\*=|\\/=|%=|=|<<|>>|<=|>=|<|>|&&|\\|\\||!|&|\\||~|\\^|\\?|:)`}
-                ],
-                indentOpenChars: ["(", "{", "["],
-                indentCloseChars: [")", "}", "]"]
-            }
-        });
+        requests.getJson("https://subnodal.com/csEngine/languages/js.json").then(function(languageData) {
+            cseInstance = new csengine.CodeslateEngine(document.getElementById("codeEditor"), {
+                languageData: languageData,
+                theme: {
+                    codeFont: `"Overpass Mono", "Roboto Mono", monospace`,
+                    uiFont: `"Lexend Deca", sans-serif`,
+                    background: "#eeeeee",
+                    gutter: "#cccccc",
+                    lineNumber: "#222222",
+                    lineNumberIndent: "black",
+                    caret: "#e0607e",
+                    scrollbar: "rgba(0, 0, 0, 0.5)",
+                    scrollbarHover: "rgba(0, 0, 0, 0.6)",
+                    scrollbarPressed: "rgba(0, 0, 0, 0.8)",
+                    selection: "#a2d5fa",
+                    text: "black",
+                    definition: "#42aaf5; font-weight: bold;",
+                    keyword: "#42aaf5",
+                    string: "#7fb069",
+                    number: "#e0607e",
+                    operator: "#f5b342",
+                    atom: "#f5b342",
+                    comment: "#cccccc; font-style: italic;",
+                    regex: "#e0607e"
+                }
+            });
 
-        cseInstance.onReady(function() {
-            cseInstance.code = `function start() {\n    \n}\n\nfunction loop() {\n    \n}`;
+            cseInstance.onReady(function() {
+                cseInstance.code = `function start() {\n    \n}\n\nfunction loop() {\n    \n}`;
+            });
         });
     });
+
+    exports.getManifest = function() {
+        return manifest;
+    };
+
+    exports.getSupportedLanguage = function() {
+        return SUPPORTED_LANGUAGES.includes(l10n.getLocaleCode()) ? l10n.getLocaleCode() : "en_GB";
+    };
+
+    exports.loadAppSettingsDialog = function() {
+        document.getElementById("appNameInput").value = manifest.name[exports.getSupportedLanguage()] || "";
+
+        dialogs.open("appSettings");
+    };
+
+    exports.saveAppSettingsDialog = function() {
+        manifest.name[exports.getSupportedLanguage()] = document.getElementById("appNameInput").value;
+
+        dialogs.close("appSettings");
+    };
+
+    exports.loadAppNamesDialog = function() {
+        var appNameInputs = document.getElementsByClassName("translateAppNameInput");
+
+        exports.saveAppSettingsDialog();
+
+        for (var i = 0; i < appNameInputs.length; i++) {
+            appNameInputs[i].value = manifest.name[appNameInputs[i].getAttribute("data-lang")] || "";
+        }
+
+        dialogs.open("appNameTranslate");
+    };
+
+    exports.saveAppNamesDialog = function() {
+        var appNameInputs = document.getElementsByClassName("translateAppNameInput");
+
+        for (var i = 0; i < appNameInputs.length; i++) {
+            manifest.name[appNameInputs[i].getAttribute("data-lang")] = appNameInputs[i].value;
+        }
+
+        dialogs.close("appNameTranslate");
+
+        exports.loadAppSettingsDialog();
+    };
 });

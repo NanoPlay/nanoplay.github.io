@@ -21,6 +21,7 @@
         "toggleDarkMode": "Toggle dark mode",
         "backToDashboard": "Back to dashboard",
 
-        "ok": "OK"
+        "ok": "OK",
+        "done": "Done"
     }
 }

@@ -27,6 +27,7 @@
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
         <script src="/script.js"></script>
         <script src="/resources.js"></script>
+        <script src="/dialogs.js"></script>
         <script src="/dashboard/dashboard.js"></script>
         <script src="/dashboard/editor.js"></script>
     </head>
@@ -34,13 +35,45 @@
         <nav s-import="/models/dashboardnav.html" class="dashboard"></nav>
         <main class="wide">
             <h2 id="editorAppName">
-                <span class="editable">App Name</span>
-                <a href="#" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
+                <span onclick="require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" class="editable">App Name</span>
+                <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
             </h2>
             <div class="split">
                 <div class="code" id="codeEditor"></div>
                 <div>Simulator coming soon!</div>
             </div>
         </main>
+        <dialog class="big" id="appSettings">
+            <div class="dialogContent">
+                <h2>App settings</h2>
+                <label>
+                    <span>App name</span>
+                    <input id="appNameInput">
+                </label>
+                <label>
+                    <span></span>
+                    <span><a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppNamesDialog();"><icon aria-hidden="true">translate</icon> Translate this</a></span>
+                </label>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppSettingsDialog();" class="green" translate>ok</button>
+            </div>
+        </dialog>
+        <dialog class="big" id="appNameTranslate">
+            <div class="dialogContent">
+                <h2>Translate app name</h2>
+                <label>
+                    <span>English (UK)</span>
+                    <input placeholder="(No translation)" data-lang="en_GB" class="translateAppNameInput">
+                </label>
+                <label>
+                    <span>Français (France)</span>
+                    <input placeholder="(No translation)" data-lang="fr_FR" class="translateAppNameInput">
+                </label>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppNamesDialog();" class="green" translate>done</button>
+            </div>
+        </dialog>
     </body>
 </html>

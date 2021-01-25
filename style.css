@@ -237,6 +237,23 @@ input {
     outline: none;
 }
 
+label {
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+label span:first-child {
+    display: inline-block;
+    width: 200px;
+    vertical-align: middle;
+}
+
+label input {
+    width: calc(100% - 210px);
+    vertical-align: middle;
+}
+
 iframe {
     width: 100%;
     height: 300px;
@@ -340,6 +357,10 @@ dialog .dialogContent > *:first-child {
 dialog .dialogButtons {
     display: flex;
     flex-direction: row-reverse;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: calc(1em - 5px);
     padding-right: calc(1em - 5px);
     text-align: end;
@@ -350,6 +371,17 @@ dialog .dialogButtons {
 dialog .dialogButtons button {
     margin-left: 5px;
     margin-right: 5px;
+}
+
+dialog.big {
+    top: calc(50vh - 250px);
+    left: calc(50vw - 300px);
+    width: 600px;
+    height: 500px;
+}
+
+dialog.big .dialogContent {
+    height: 435px;
 }
 
 .desktop { 
@@ -412,6 +444,10 @@ dialog[open] ~ .dialogBackground {
     overflow: hidden;
 }
 
+.code * {
+    box-sizing: initial;
+}
+
 #editorAppName {
     margin: 0;
     margin-bottom: 0.6em;
@@ -431,7 +467,23 @@ dialog[open] ~ .dialogBackground {
     height: calc(100vh - 8em);
 }
 
+@media (max-width: 650px) {
+    dialog.big {
+        left: 5vw;
+        width: 90vw;
+    }
+}
+
 @media (max-width: 550px) {
+    label span:first-child {
+        display: block;
+        width: 100%;
+    }
+    
+    label input {
+        width: 100%;
+    }
+
     dialog {
         left: 5vw;
         width: 90vw;
@@ -449,6 +501,17 @@ dialog[open] ~ .dialogBackground {
 
     .split > * {
         flex-basis: 100%;
+    }
+}
+
+@media (max-height: 550px) {
+    dialog.big {
+        top: 5vh;
+        height: 90vh;
+    }
+
+    dialog.big .dialogContent {
+        height: calc(90vh - 65px);
     }
 }
 
