@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="/style.css">
         <script src="https://cdn.subnodal.com/lib/submodules.min.js"></script>
         <script src="https://cdn.subnodal.com/lib/subelements.min.js"></script>
+        <script src="https://cdn.subnodal.com/lib/nanoplay.min.js"></script>
+        <script src="https://cdn.subnodal.com/lib/csengine.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-functions.js"></script>
@@ -26,10 +28,19 @@
         <script src="/script.js"></script>
         <script src="/resources.js"></script>
         <script src="/dashboard/dashboard.js"></script>
+        <script src="/dashboard/editor.js"></script>
     </head>
     <body hidden>
-        <s-if condition="{{ resources.getCurrentUser().username != null }}">
-            <p>Hello, {{ resources.getCurrentUser().username }}!</p>
-        </s-if>
+        <nav s-import="/models/dashboardnav.html" class="dashboard"></nav>
+        <main class="wide">
+            <h2 id="editorAppName">
+                <span class="editable">App Name</span>
+                <a href="#" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
+            </h2>
+            <div class="split">
+                <div class="code" id="codeEditor"></div>
+                <div>Simulator coming soon!</div>
+            </div>
+        </main>
     </body>
 </html>

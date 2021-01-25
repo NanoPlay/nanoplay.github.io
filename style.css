@@ -23,8 +23,6 @@
 }
 
 * {
-    font-size: 20px;
-    font-family: "Lexend Deca", sans-serif;
     box-sizing: border-box;
 }
 
@@ -46,6 +44,8 @@ input:not([type="checkbox"]):focus {
 
 body {
     margin: 0;
+    font-size: 20px;
+    font-family: "Lexend Deca", sans-serif;
 }
 
 nav {
@@ -102,12 +102,33 @@ nav div.floatEnd a:last-child {
     padding-inline-end: 0;
 }
 
+nav.dashboard {
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+}
+
+nav.dashboard a icon {
+    margin-top: -0.2em;
+    margin-bottom: -0.2em;
+    font-size: 1.5em;
+}
+
+nav.dashboard a:last-child icon {
+    padding-inline-end: 5px;
+}
+
 main {
     height: calc(100vh - 3em);
     margin-top: 3em;
     padding: 1em;
     padding-left: 10vw;
     padding-right: 10vw;
+}
+
+main.wide {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 nav .menu {
@@ -133,12 +154,34 @@ h1 {
     font-size: 2em;
 }
 
+a {
+    color: var(--red);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.hidden {
+    color: inherit;
+    opacity: 1;
+    transition: 1s opacity;
+}
+
+a.hidden:hover {
+    text-decoration: none;
+    opacity: 0.6;
+}
+
 button {
     padding: 10px;
     padding-left: 1em;
     padding-right: 1em;
     background-color: var(--blue);
     color: var(--blueText);
+    font-size: 20px;
+    font-family: "Lexend Deca", sans-serif;
     border: none;
     border-radius: 10px;
     box-shadow: none;
@@ -184,6 +227,8 @@ input {
     padding-right: 1em;
     background-color: var(--shade);
     color: var(--shadeText);
+    font-size: 20px;
+    font-family: "Lexend Deca", sans-serif;
     border: none;
     border-radius: 10px;
     box-shadow: none;
@@ -323,8 +368,8 @@ dialog .dialogButtons button {
 }
 
 .split > * {
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     flex-grow: 1;
     flex-basis: 0;
 }
@@ -348,6 +393,11 @@ dialog .dialogButtons button {
     z-index: 2;
 }
 
+.editable {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+}
+
 dialog[open] ~ .dialogBackground {
     display: block;
 }
@@ -355,6 +405,30 @@ dialog[open] ~ .dialogBackground {
 .subnodalAccountsButton {
     width: 250px;
     height: 50px;
+}
+
+.code {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#editorAppName {
+    margin: 0;
+    margin-bottom: 0.6em;
+    font-size: 1.2em;
+}
+
+#editorAppName .editable {
+    display: inline-block;
+    max-width: 40vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+#codeEditor {
+    height: calc(100vh - 8em);
 }
 
 @media (max-width: 550px) {
