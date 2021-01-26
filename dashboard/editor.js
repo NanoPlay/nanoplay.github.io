@@ -20,7 +20,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
 
     exports.statuses = {
-        DISCONNCTED: 0,
+        DISCONNECTED: 0,
         CONNECTING: 1,
         CONNECTED: 2,
         UPLOADING: 3,
@@ -32,7 +32,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         id: "testapp",
         name: {}
     };
-    var status = 0;
+    var status = exports.statuses.DISCONNECTED;
     var unsuccessfulConnections = 0;
 
     var lightTheme = null;
@@ -75,7 +75,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         if (communications.getConnectedNanoplayCount() > 0) {
             status = exports.statuses.CONNECTED;
         } else {
-            status = exports.statuses.DISCONNCTED;
+            status = exports.statuses.DISCONNECTED;
         }
     };
 
@@ -84,7 +84,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     };
 
     exports.allowedToCommunicate = function() {
-        return [exports.statuses.DISCONNCTED, exports.statuses.CONNECTED, exports.statuses.UPLOADED].includes(exports.getStatus());
+        return [exports.statuses.DISCONNECTED, exports.statuses.CONNECTED, exports.statuses.UPLOADED].includes(exports.getStatus());
     };
 
     exports.getAppName = function() {
@@ -183,9 +183,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
             communications.setSystemDate();
         }).catch(function(error) {
-            console.error(error);
+            console.error(error); // TODO: Catch `SyntaxError`s and show them to user
 
-            status = exports.setStatusGeneric();
+            exports.setStatusGeneric();
 
             dialogs.open("communicationsError");
             subElements.render();
