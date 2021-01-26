@@ -41,12 +41,12 @@
                 <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.CONNECTING }}">
                     <button disabled class="green" translate>editor_connecting</button>
                 </s-if>
-                <s-elseif condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.UPLOADING }}">
+                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.UPLOADING }}">
                     <button disabled class="green" translate>editor_uploading</button>
-                </s-elseif>
-                <s-else>
+                </s-if>
+                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').allowedToCommunicate() }}">
                     <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" class="green" translate>editor_sendToNanoplay</button>
-                </s-else>
+                </s-if>
             </h2>
             <div class="split">
                 <div class="code" id="codeEditor"></div>

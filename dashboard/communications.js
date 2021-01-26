@@ -35,14 +35,16 @@ namespace("com.subnodal.nanoplay.website.communications", function(exports) {
     };
 
     exports.uploadApp = function(code, manifest) {
-        var promises = connectedNanoplays.map(function(i) {
+        return Promise.all(connectedNanoplays.map(function(i) {
             try {
                 return i.uploadApp(code, manifest);
             } catch (e) {
                 return Promise.reject(e);
             }
-        });
+        }));
+    };
 
-        return Promise.all(promises);
+    exports.setSystemDate = function() {
+        return Promise.all(connectedNanoplays.map((i) => i.setSystemDate()));
     };
 });

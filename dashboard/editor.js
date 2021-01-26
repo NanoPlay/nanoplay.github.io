@@ -83,6 +83,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         return unsuccessfulConnections;
     };
 
+    exports.allowedToCommunicate = function() {
+        return [exports.statuses.DISCONNCTED, exports.statuses.CONNECTED, exports.statuses.UPLOADED].includes(exports.getStatus());
+    };
+
     exports.getAppName = function() {
         return manifest.name[exports.getSupportedLanguage()] || _("editor_defaultAppName");
     };
@@ -166,6 +170,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         exports.ensureConnection().then(function() {
             status = exports.statuses.UPLOADING;
 
+            cseInstance.code = cseInstance.code; // Ensure that old code isn't uploaded by calling setter method
+
             subElements.render();
 
             return communications.uploadApp(cseInstance.code, manifest);
@@ -174,6 +180,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             lastUploadDate = new Date();
 
             subElements.render();
+
+            communications.setSystemDate();
         }).catch(function(error) {
             console.error(error);
 
