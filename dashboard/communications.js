@@ -47,4 +47,16 @@ namespace("com.subnodal.nanoplay.website.communications", function(exports) {
     exports.setSystemDate = function() {
         return Promise.all(connectedNanoplays.map((i) => i.setSystemDate()));
     };
+
+    exports.getLogMessages = function() {
+        var logMessages = {};
+
+        for (var i = 0; i < connectedNanoplays.length; i++) {
+            logMessages[connectedNanoplays[i].name] = connectedNanoplays[i].connection.rxData;
+
+            connectedNanoplays[i].connection.rxData = "";
+        }
+
+        return logMessages;
+    };
 });

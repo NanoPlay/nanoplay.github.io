@@ -250,6 +250,24 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                 }
             });
 
+            setInterval(function() {
+                if (exports.allowedToCommunicate()) {
+                    var logMessages = communications.getLogMessages();
+
+                    for (var name in logMessages) {
+                        var matches = logMessages[name].match(/<error type="app">(.*?)<\/error>/g);
+
+                        if (matches == null) {
+                            continue;
+                        }
+
+                        for (var j = 0; j < matches.length; j++) {
+                            exports.addToLog(/<error type="app">(.*?)<\/error>/g.exec(matches[j])[1], name, "error");
+                        }
+                    }
+                }
+            }, 1000);
+
             manifest.name[exports.getSupportedLanguage()] = _("editor_defaultAppName");
 
             subElements.render();
