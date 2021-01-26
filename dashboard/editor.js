@@ -158,6 +158,26 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         });
     };
 
+    exports.addToLog = function(text, source = "", type = "info") {
+        var entryElement = document.createElement("div");
+        var entryHeader = document.createElement("strong");
+        var entryContents = document.createTextNode((source == "" ? "" : " ") + String(text));
+
+        entryHeader.innerText = source;
+
+        entryHeader.classList.add(type);
+
+        entryElement.appendChild(entryHeader);
+        entryElement.appendChild(entryContents);
+        document.getElementById("editorLog").appendChild(entryElement);
+
+        document.getElementById("editorLog").scrollTop = document.getElementById("editorLog").scrollHeight;
+    };
+
+    exports.clearLog = function() {
+        document.getElementById("editorLog").innerHTML = "";
+    };
+
     exports.ensureConnection = function() {
         if (communications.getConnectedNanoplayCount() > 0) {
             return Promise.resolve();
@@ -167,6 +187,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     };
 
     exports.uploadApp = function() {
+        exports.clearLog();
+
         exports.ensureConnection().then(function() {
             status = exports.statuses.UPLOADING;
 
@@ -185,9 +207,13 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         }).catch(function(error) {
             console.error(error); // TODO: Catch `SyntaxError`s and show them to user
 
-            exports.setStatusGeneric();
+            if (error.name == "SyntaxError") {
+                exports.addToLog(error.toString(), _("editor_logSource_codeChecker"), "error");
+            } else {
+                dialogs.open("communicationsError");
+            }
 
-            dialogs.open("communicationsError");
+            exports.setStatusGeneric();
             subElements.render();
         });
     };

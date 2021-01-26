@@ -50,7 +50,11 @@
             </h2>
             <div class="split">
                 <div class="code" id="codeEditor"></div>
-                <div>Simulator coming soon!</div>
+                <div>
+                    <p>Simulator coming soon!</p>
+                    <pre id="editorLog"></pre>
+                    <div id="editorLogEmpty">No errors yet!</div>
+                </div>
             </div>
         </main>
         <div id="editorStatus">{{ require("com.subnodal.nanoplay.website.editor").getStatusMessage() }}</div>

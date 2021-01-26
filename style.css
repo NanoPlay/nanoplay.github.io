@@ -282,6 +282,21 @@ iframe {
     border: none;
 }
 
+pre {
+    padding: 0.5em;
+    border-radius: 10px;
+    background-color: var(--shade);
+    color: var(--shadeText);
+    font-family: "Overpass Mono", "Roboto Mono", monospace;
+    font-size: 0.8em;
+    overflow: auto;
+    white-space: pre;
+}
+
+pre strong.error {
+    color: var(--red);
+}
+
 loader {
     position: relative;
     display: block;
@@ -505,6 +520,27 @@ body.dark .qrCode {
 
 #codeEditor {
     height: calc(100vh - 8.4em);
+}
+
+#editorLog {
+    height: 20vh;
+}
+
+#editorLog:empty {
+    display: none;
+}
+
+#editorLogEmpty {
+    display: none;
+    padding: 1em;
+    background-color: var(--shade);
+    color: var(--shadeText);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#editorLog:empty ~ #editorLogEmpty {
+    display: block;
 }
 
 #editorStatus {
