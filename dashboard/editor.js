@@ -22,11 +22,14 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     exports.statuses = {
         DISCONNCTED: 0,
         CONNECTING: 1,
-        CONNECTED: 2
+        CONNECTED: 2,
+        UPLOADING: 3,
+        UPLOADED: 4
     };
 
     var cseInstance = null;
     var manifest = {
+        id: "testapp",
         name: {}
     };
     var status = 0;
@@ -35,6 +38,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var lightTheme = null;
     var darkTheme = null;
     var wasOnDarkTheme = false;
+    var lastUploadDate = null;
 
     exports.getManifest = function() {
         return manifest;
@@ -58,6 +62,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                 } else {
                     return _("editor_status_connected_singular", {name: communications.getConnectedNanoplayNames()[0]});
                 }
+            case exports.statuses.UPLOADING:
+                return _("editor_status_uploading");
+            case exports.statuses.UPLOADED:
+                return _("editor_status_uploaded", {lastUploadDate: l10n.formatValue(lastUploadDate, {hour: "2-digit", minute: "2-digit"})});
             default:
                 return _("editor_status_disconnected");
         }
@@ -75,6 +83,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         return unsuccessfulConnections;
     };
 
+    exports.getAppName = function() {
+        return manifest.name[exports.getSupportedLanguage()] || _("editor_defaultAppName");
+    };
+
     exports.loadAppSettingsDialog = function() {
         document.getElementById("appNameInput").value = manifest.name[exports.getSupportedLanguage()] || "";
 
@@ -85,6 +97,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         manifest.name[exports.getSupportedLanguage()] = document.getElementById("appNameInput").value;
 
         dialogs.close("appSettings");
+
+        subElements.render();
     };
 
     exports.loadAppNamesDialog = function() {
@@ -109,6 +123,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         dialogs.close("appNameTranslate");
 
         exports.loadAppSettingsDialog();
+
+        subElements.render();
     };
 
     exports.connectToNewNanoplay = function() {
@@ -120,7 +136,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             return;
         }
 
-        communications.connectToNewNanoplay().then(function() {
+        subElements.render();
+
+        return communications.connectToNewNanoplay().then(function() {
             status = exports.statuses.CONNECTED;
             unsuccessfulConnections = 0;
 
@@ -134,8 +152,6 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             dialogs.open("connectionError");
             subElements.render();
         });
-
-        subElements.render();
     };
 
     exports.ensureConnection = function() {
@@ -144,6 +160,28 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         } else {
             return exports.connectToNewNanoplay();
         }
+    };
+
+    exports.uploadApp = function() {
+        exports.ensureConnection().then(function() {
+            status = exports.statuses.UPLOADING;
+
+            subElements.render();
+
+            return communications.uploadApp(cseInstance.code, manifest);
+        }).then(function() {
+            status = exports.statuses.UPLOADED;
+            lastUploadDate = new Date();
+
+            subElements.render();
+        }).catch(function(error) {
+            console.error(error);
+
+            status = exports.setStatusGeneric();
+
+            dialogs.open("communicationsError");
+            subElements.render();
+        });
     };
 
     subElements.ready(function() {
@@ -177,6 +215,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     cseInstance.render();
                 }
             });
+
+            manifest.name[exports.getSupportedLanguage()] = _("editor_defaultAppName");
+
+            subElements.render();
         });
     });
 });

@@ -36,13 +36,16 @@
         <nav s-import="/models/dashboardnav.html" class="dashboard"></nav>
         <main class="wide">
             <h2 id="editorAppName">
-                <span onclick="require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" class="editable">App Name</span>
+                <span onclick="require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" class="editable">{{ require("com.subnodal.nanoplay.website.editor").getAppName() }}</span>
                 <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
                 <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.CONNECTING }}">
                     <button disabled class="green" translate>editor_connecting</button>
                 </s-if>
+                <s-elseif condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.UPLOADING }}">
+                    <button disabled class="green" translate>editor_uploading</button>
+                </s-elseif>
                 <s-else>
-                    <button onclick="require('com.subnodal.nanoplay.website.editor').ensureConnection();" class="green" translate>editor_sendToNanoplay</button>
+                    <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" class="green" translate>editor_sendToNanoplay</button>
                 </s-else>
             </h2>
             <div class="split">
@@ -102,6 +105,14 @@
                 <s-else>
                     <p translate>editor_connectionError</p>
                 </s-else>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>ok</button>
+            </div>
+        </dialog>
+        <dialog id="communicationsError">
+            <div class="dialogContent">
+                <p translate>editor_communicationsError</p>
             </div>
             <div class="dialogButtons">
                 <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>ok</button>
