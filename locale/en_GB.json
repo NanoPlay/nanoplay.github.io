@@ -25,6 +25,7 @@
         "editor_sendToNanoplay": "Send to NanoPlay",
         "editor_connecting": "Connecting...",
         "editor_uploading": "Uploading...",
+        "editor_noErrorsYet": "No errors yet!",
         "editor_noBluetooth": "No Bluetooth? Don't worry! Visit the NanoPlay editor on your mobile phone to connect to your NanoPlay.",
         "editor_noBluetoothQrCode": "Point your phone's camera at this QR code to quickly visit the NanoPlay editor",
         "editor_connectionError": "Looks like we couldn't connect to your NanoPlay! Try connecting again.",
