@@ -255,7 +255,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
             subElements.render();
 
-            return exports.syncAppToCloud();
+            return exports.syncToCloud();
         }).then(function() {
             return communications.uploadApp(cseInstance.code, manifest);
         }).then(function() {
