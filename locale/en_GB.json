@@ -4,6 +4,7 @@
     "textDirection": "ltr",
     "strings": {
         "nanoplay": "NanoPlay",
+        "nanoplayPage": "{page} - NanoPlay",
         "home": "Home",
         "guides": "Guides",
         "dashboard": "Dashboard",

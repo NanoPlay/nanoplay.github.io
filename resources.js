@@ -111,6 +111,26 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
         });
     };
 
+    exports.getAppFromCloud = function(id) {
+        if (typeof(id) != "string" || id.trim() == "") {
+            throw new Error("Manifest has no app ID");
+        }
+
+        return new Promise(function(resolve, reject) {
+            firebase.database().ref("users/" + currentUser.uid + "/apps/" + id).once("value", function(snapshot) {
+                if (snapshot.val() == null) {
+                    reject("No app with the specified app ID could not be found");
+
+                    return;
+                }
+
+                resolve(snapshot.val());
+            }).catch(function(error) {
+                reject(error);
+            });
+        });
+    };
+
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             currentUser.uid = user.uid;

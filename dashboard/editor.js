@@ -44,6 +44,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var lastSyncedCode = null;
     var lastTypedCode = null;
     var syncInProgress = false;
+    var canAcceptCodeLoad = true;
 
     exports.getManifest = function() {
         return manifest;
@@ -212,6 +213,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
         if (manifest.id == null) {
             manifest.id = core.generateKey();
+
+            window.history.replaceState(null, _("nanoplayPage", {page: exports.getAppName()}), window.location.href + "?id=" + encodeURIComponent(manifest.id));
         }
 
         return resources.syncAppToCloud(cseInstance.code, manifest).then(function() {
@@ -292,6 +295,30 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
             cseInstance.onReady(function() {
                 cseInstance.code = `function start() {\n    \n}\n\nfunction loop() {\n    \n}`;
+
+                resources.registerUserChangeListener(function(isSignedIn) {
+                    if (!isSignedIn) {
+                        return;
+                    }
+
+                    if (!canAcceptCodeLoad) {
+                        return;
+                    }
+
+                    if (core.parameter("id") != null) {
+                        resources.getAppFromCloud(core.parameter("id")).then(function(data) {
+                            cseInstance.code = data.code;
+                            manifest = data.manifest;
+
+                            subElements.render();
+
+                            document.getElementById("loadingCover").style.display = "none";
+                        });
+                    }
+
+                    document.getElementById("loadingCover").style.display = "none";
+                    canAcceptCodeLoad = false;
+                });
             });
 
             setInterval(function() {
