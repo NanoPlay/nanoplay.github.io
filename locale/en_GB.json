@@ -15,6 +15,7 @@
         "authError": "Sorry, we ran into a problem when signing you in. Please try again later.",
 
         "editor_saveApp": "Save this app",
+        "editor_savingApp": "Saving your app...",
         "editor_seeApps": "See your apps",
         "editor_appSettings": "App settings",
         "editor_appName": "App name",

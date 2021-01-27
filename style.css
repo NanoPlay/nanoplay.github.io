@@ -115,7 +115,7 @@ nav div.floatEnd {
     float: left;
 }
 
-nav div.floatEnd a:last-child {
+nav .floatEnd > a:last-child {
     padding-inline-end: 0;
 }
 
@@ -131,7 +131,7 @@ nav.dashboard a icon {
     font-size: 1.5em;
 }
 
-nav.dashboard a:last-child icon {
+nav.dashboard .floatEnd > a:last-child icon {
     padding-inline-end: 5px;
 }
 

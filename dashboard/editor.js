@@ -9,11 +9,13 @@
 
 namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var subElements = require("com.subnodal.subelements");
+    var core = require("com.subnodal.subelements.core");
     var requests = require("com.subnodal.subelements.requests");
     var l10n = require("com.subnodal.subelements.l10n");
     var csengine = require("com.subnodal.codeslate.engine");
     var _ = l10n.translate;
 
+    var resources = require("com.subnodal.nanoplay.website.resources");
     var dialogs = require("com.subnodal.nanoplay.website.dialogs");
     var communications = require("com.subnodal.nanoplay.website.communications");
 
@@ -29,7 +31,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
     var cseInstance = null;
     var manifest = {
-        id: "testapp",
+        id: null,
         name: {}
     };
     var status = exports.statuses.DISCONNECTED;
@@ -39,6 +41,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var darkTheme = null;
     var wasOnDarkTheme = false;
     var lastUploadDate = null;
+    var lastSyncedCode = null;
+    var lastTypedCode = null;
+    var syncInProgress = false;
 
     exports.getManifest = function() {
         return manifest;
@@ -101,6 +106,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         manifest.name[exports.getSupportedLanguage()] = document.getElementById("appNameInput").value;
 
         dialogs.close("appSettings");
+
+        exports.syncToCloud();
 
         subElements.render();
     };
@@ -178,6 +185,55 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         document.getElementById("editorLog").innerHTML = "";
     };
 
+    exports.syncToCloud = function() {
+        cseInstance.code = cseInstance.code; // Ensure that old code isn't synced by calling setter method
+
+        if (lastSyncedCode == cseInstance.code) {
+            return Promise.resolve();
+        }
+
+        if (syncInProgress) {
+            return new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                    if (!syncInProgress) {
+                        subElements.render();
+
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+
+        var codeBeforeSyncing = cseInstance.code;
+
+        syncInProgress = true;
+
+        subElements.render();
+
+        if (manifest.id == null) {
+            manifest.id = core.generateKey();
+        }
+
+        return resources.syncAppToCloud(cseInstance.code, manifest).then(function() {
+            syncInProgress = false;
+            lastSyncedCode = codeBeforeSyncing;
+
+            document.getElementById("syncStatusIcon").innerText = "cloud_done";
+
+            subElements.render();
+
+            return Promise.resolve();
+        });
+    };
+
+    exports.isSyncing = function() {
+        return syncInProgress;
+    };
+
+    exports.isSynced = function() {
+        return cseInstance != null && lastSyncedCode == cseInstance.code;
+    };
+
     exports.ensureConnection = function() {
         if (communications.getConnectedNanoplayCount() > 0) {
             return Promise.resolve();
@@ -196,6 +252,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
             subElements.render();
 
+            return exports.syncAppToCloud();
+        }).then(function() {
             return communications.uploadApp(cseInstance.code, manifest);
         }).then(function() {
             status = exports.statuses.UPLOADED;
@@ -247,6 +305,12 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     }
 
                     cseInstance.render();
+                }
+
+                if (lastTypedCode != cseInstance.code) {
+                    lastTypedCode = cseInstance.code;
+                    
+                    document.getElementById("syncStatusIcon").innerText = "save";
                 }
             });
 

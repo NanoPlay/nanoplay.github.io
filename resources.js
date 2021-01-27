@@ -100,6 +100,17 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
         userChangeListeners.push(callback);
     };
 
+    exports.syncAppToCloud = function(code, manifest) {
+        if (typeof(manifest.id) != "string" || manifest.id.trim() == "") {
+            throw new Error("Manifest has no app ID");
+        }
+
+        return firebase.database().ref("users/" + currentUser.uid + "/apps/" + manifest.id).set({
+            code: code,
+            manifest: manifest
+        });
+    };
+
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             currentUser.uid = user.uid;
