@@ -27,7 +27,7 @@
 }
 
 *:focus {
-    outline: 2px solid black;
+    outline: 2px solid var(--foreground);
 }
 
 *:focus:not(:focus-visible) {
@@ -35,7 +35,7 @@
 }
 
 *:focus-visible {
-    outline: 2px solid black;
+    outline: 2px solid var(--foreground);
 }
 
 input:not([type="checkbox"]):focus {
