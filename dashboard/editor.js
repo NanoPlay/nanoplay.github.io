@@ -139,6 +139,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         subElements.render();
     };
 
+    exports.loadOpenAppDialog = function() {
+        dialogs.open("openApp");
+    };
+
     exports.connectToNewNanoplay = function() {
         status = exports.statuses.CONNECTING;
 

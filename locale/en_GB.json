@@ -24,6 +24,7 @@
         "editor_translateThis": "Translate this",
         "editor_translateAppName": "Translate app name",
         "editor_noTranslation": "(No translation)",
+        "editor_yourApps": "Your apps",
         "editor_sendToNanoplay": "Send to NanoPlay",
         "editor_connecting": "Connecting...",
         "editor_uploading": "Uploading...",
@@ -51,6 +52,8 @@
         "backToDashboard": "Back to dashboard",
 
         "ok": "OK",
-        "done": "Done"
+        "cancel": "Cancel",
+        "done": "Done",
+        "open": "Open"
     }
 }

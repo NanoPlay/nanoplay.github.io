@@ -45,7 +45,7 @@
                 <s-else>
                     <a href="javascript:require('com.subnodal.nanoplay.website.editor').syncToCloud();" title="{{ _('editor_saveApp') }}" aria-label="{{ _('editor_saveApp') }}"><icon id="syncStatusIcon">save</icon></a>
                 </s-else>
-                <a href="#" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
+                <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadOpenAppDialog();" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
                 <a href="/dashboard" title="{{ _('backToDashboard') }}" aria-label="{{ _('backToDashboard') }}"><icon>apps</icon></a>
             </div>
         </nav>
@@ -60,7 +60,12 @@
                     <button disabled class="green" translate>editor_uploading</button>
                 </s-if>
                 <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').allowedToCommunicate() }}">
-                    <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" class="green" translate>editor_sendToNanoplay</button>
+                    <span class="desktop">
+                        <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" class="green" translate>editor_sendToNanoplay</button>
+                    </span>
+                    <span class="mobile">
+                        <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" title="{{ _('editor_sendToNanoplay') }}" aria-label="{{ _('editor_sendToNanoplay') }}" class="green"><icon>send</icon></button>
+                    </span>
                 </s-if>
             </h2>
             <div class="split">
@@ -103,6 +108,15 @@
             </div>
             <div class="dialogButtons">
                 <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppNamesDialog();" class="green" translate>done</button>
+            </div>
+        </dialog>
+        <dialog class="big" id="openApp">
+            <div class="dialogContent">
+                <h2 translate>editor_yourApps</h2>
+            </div>
+            <div class="dialogButtons">
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="green" translate>open</button>
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="blue" translate>cancel</button>
             </div>
         </dialog>
         <dialog class="big" id="noBluetooth">
