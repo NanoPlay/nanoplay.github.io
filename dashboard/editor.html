@@ -68,7 +68,7 @@
                     </span>
                 </s-if>
             </h2>
-            <div class="split">
+            <div class="split" id="editorArea">
                 <div class="code" id="codeEditor"></div>
                 <div>
                     <p>Simulator coming soon!</p>
@@ -113,10 +113,29 @@
         <dialog class="big" id="openApp">
             <div class="dialogContent">
                 <h2 translate>editor_yourApps</h2>
+                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getAppsList() == null }}">
+                    <loader></loader>
+                </s-if>
+                <s-else>
+                    <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getAppsList().length > 0 }}">
+                        <s-each in="require('com.subnodal.nanoplay.website.editor').getAppsList()" valuevar="app">
+                            <a href="editor.html?id={{ app.manifest.id }}" class="appCard">
+                                <span class="appCardTitle">{{ app.manifest.name[require("com.subnodal.nanoplay.website.editor").getSupportedLanguage()] || _("editor_defaultAppName") }}</span>
+                                <span class="appCardDateModified">{{ require("com.subnodal.subelements.l10n").formatValue(new Date(app.manifest.dateModified), {dateStyle: "medium"}) }}</span>
+                            </a>
+                        </s-each>
+                    </s-if>
+                    <s-else>
+                        <div class="message">
+                            <icon aria-hidden="true">folder</icon>
+                            <h3 translate>editor_noAppsYet</h3>
+                            <p translate>editor_noAppsYetMessage</p>
+                        </div>
+                    </s-else>
+                </s-else>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="green" translate>open</button>
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="blue" translate>cancel</button>
+                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>cancel</button>
             </div>
         </dialog>
         <dialog class="big" id="noBluetooth">

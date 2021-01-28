@@ -40,11 +40,14 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var lightTheme = null;
     var darkTheme = null;
     var wasOnDarkTheme = false;
+
     var lastUploadDate = null;
     var lastSyncedCode = null;
     var lastTypedCode = null;
     var syncInProgress = false;
     var canAcceptCodeLoad = true;
+
+    var loadedAppsList = null;
 
     exports.getManifest = function() {
         return manifest;
@@ -71,7 +74,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             case exports.statuses.UPLOADING:
                 return _("editor_status_uploading");
             case exports.statuses.UPLOADED:
-                return _("editor_status_uploaded", {lastUploadDate: l10n.formatValue(lastUploadDate, {hour: "2-digit", minute: "2-digit"})});
+                return _("editor_status_uploaded", {lastUploadDate: l10n.formatValue(lastUploadDate, {timeStyle: "short"})});
             default:
                 return _("editor_status_disconnected");
         }
@@ -140,7 +143,20 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     };
 
     exports.loadOpenAppDialog = function() {
+        loadedAppsList = null;
+
         dialogs.open("openApp");
+        subElements.render();
+
+        resources.getAppsListFromCloud().then(function(appsList) {
+            loadedAppsList = appsList;
+
+            subElements.render();
+        });
+    };
+
+    exports.getAppsList = function() {
+        return loadedAppsList;
     };
 
     exports.connectToNewNanoplay = function() {
@@ -210,6 +226,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         }
 
         var codeBeforeSyncing = cseInstance.code;
+        var isNew = manifest.id == null;
 
         syncInProgress = true;
 
@@ -221,7 +238,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             window.history.replaceState(null, _("nanoplayPage", {page: exports.getAppName()}), window.location.href + "?id=" + encodeURIComponent(manifest.id));
         }
 
-        return resources.syncAppToCloud(cseInstance.code, manifest).then(function() {
+        return resources.syncAppToCloud(cseInstance.code, manifest, isNew).then(function() {
             syncInProgress = false;
             lastSyncedCode = codeBeforeSyncing;
 
@@ -242,6 +259,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     };
 
     exports.ensureConnection = function() {
+        communications.checkConnections();
+
         if (communications.getConnectedNanoplayCount() > 0) {
             return Promise.resolve();
         } else {
@@ -362,6 +381,12 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     }
                 }
             }, 1000);
+
+            window.onbeforeunload = function() {
+                if (!exports.isSynced()) {
+                    return _("editor_unsavedChangesWarning");
+                }
+            };
 
             manifest.name[exports.getSupportedLanguage()] = _("editor_defaultAppName");
 

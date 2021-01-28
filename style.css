@@ -496,6 +496,49 @@ body.dark .qrCode {
     box-sizing: initial;
 }
 
+.message {
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+    opacity: 0.6;
+}
+
+.message icon {
+    font-size: 3em;
+}
+
+.appCard {
+    display: inline-block;
+    width: calc(50% - 1.2em);
+    height: 4.5em;
+    margin: 0.5em;
+    margin-bottom: 0.8em;
+    padding: 0.5em;
+    background-color: var(--shade);
+    color: var(--shadeText);
+    border-radius: 10px;
+    box-shadow: none;
+    transition: 1s box-shadow;
+}
+
+.appCard:hover {
+    text-decoration: none;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+}
+
+.appCard .appCardTitle {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.appCard .appCardDateModified {
+    display: block;
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
 #loadingCover {
     position: fixed;
     top: 0;
@@ -513,6 +556,10 @@ body.dark .qrCode {
 
 #loadingCover loader::before, #loadingCover loader::after {
     background-color: var(--shade);
+}
+
+#editorArea {
+    padding-bottom: 2em;
 }
 
 #editorAppName {
@@ -598,6 +645,11 @@ body.dark .qrCode {
     dialog {
         left: 5vw;
         width: 90vw;
+    }
+
+    .appCard {
+        display: block;
+        width: calc(100% - 1em);
     }
 }
 

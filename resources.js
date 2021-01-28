@@ -100,14 +100,18 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
         userChangeListeners.push(callback);
     };
 
-    exports.syncAppToCloud = function(code, manifest) {
+    exports.syncAppToCloud = function(code, manifest, isNew = false) {
         if (typeof(manifest.id) != "string" || manifest.id.trim() == "") {
             throw new Error("Manifest has no app ID");
         }
 
         return firebase.database().ref("users/" + currentUser.uid + "/apps/" + manifest.id).set({
             code: code,
-            manifest: manifest
+            manifest: {
+                dateCreated: new Date().getTime(),
+                ...manifest,
+                dateModified: new Date().getTime()
+            }
         });
     };
 
@@ -127,6 +131,20 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
                 resolve(snapshot.val());
             }).catch(function(error) {
                 reject(error);
+            });
+        });
+    };
+
+    exports.getAppsListFromCloud = function() {
+        return new Promise(function(resolve, reject) {
+            firebase.database().ref("users/" + currentUser.uid + "/apps").orderByChild("manifest/dateModified").once("value", function(snapshot) {
+                var appsList = [];
+
+                snapshot.forEach(function(childSnapshot) {
+                    appsList.unshift(childSnapshot.val());
+                })
+
+                resolve(appsList);
             });
         });
     };

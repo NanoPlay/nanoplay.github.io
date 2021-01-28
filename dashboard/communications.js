@@ -20,6 +20,10 @@ namespace("com.subnodal.nanoplay.website.communications", function(exports) {
         return connectedNanoplays.map((i) => i.name);
     };
 
+    exports.checkConnections = function() {
+        return connectedNanoplays.filter((i) => i.isConnected);
+    };
+
     exports.connectToNewNanoplay = function() {
         return new Promise(function(resolve, reject) {
             var newNanoplay = new nanoplay.NanoPlay();

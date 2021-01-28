@@ -25,6 +25,8 @@
         "editor_translateAppName": "Translate app name",
         "editor_noTranslation": "(No translation)",
         "editor_yourApps": "Your apps",
+        "editor_noAppsYet": "No apps yet!",
+        "editor_noAppsYetMessage": "Once you've coded some apps, they'll appear here for you to open later.",
         "editor_sendToNanoplay": "Send to NanoPlay",
         "editor_connecting": "Connecting...",
         "editor_uploading": "Uploading...",
@@ -35,6 +37,7 @@
         "editor_connectionErrorPersistent": "Looks like we still can't connect to your NanoPlay!",
         "editor_connectionErrorPersistentLink": "Try refreshing the page instead.",
         "editor_communicationsError": "Uh oh! Your NanoPlay wasn't able to complete that action. Try doing it again.",
+        "editor_unsavedChangesWarning": "Looks like you've got unsaved changes with your code! Don't forget to save your code before leaving.",
 
         "editor_status_disconnected": "Disconnected",
         "editor_status_connecting": "Connecting...",
