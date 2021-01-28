@@ -266,7 +266,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
             communications.setSystemDate();
         }).catch(function(error) {
-            console.error(error); // TODO: Catch `SyntaxError`s and show them to user
+            console.error(error);
 
             if (error.name == "SyntaxError") {
                 exports.addToLog(error.toString(), _("editor_logSource_codeChecker"), "error");
