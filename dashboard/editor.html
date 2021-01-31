@@ -71,7 +71,17 @@
             <div class="split" id="editorArea">
                 <div class="code" id="codeEditor"></div>
                 <div>
-                    <p>Simulator coming soon!</p>
+                    <div class="simulator">
+                        <button aria-label="{{ _('editor_simulator_topLeftButton') }}" title="{{ _('editor_simulator_topLeftButton') }}"></button>
+                        <button aria-label="{{ _('editor_simulator_topRightButton') }}" title="{{ _('editor_simulator_topRightButton') }}"></button>
+                        <button aria-label="{{ _('editor_simulator_bottomLeftButton') }}" title="{{ _('editor_simulator_bottomLeftButton') }}"></button>
+                        <button aria-label="{{ _('editor_simulator_bottomRightButton') }}" title="{{ _('editor_simulator_bottomRightButton') }}"></button>
+                        <div class="casing">
+                            <div class="display">
+                                <canvas width="128" height="64"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <pre id="editorLog"></pre>
                     <div id="editorLogEmpty" translate>editor_noErrorsYet</div>
                 </div>

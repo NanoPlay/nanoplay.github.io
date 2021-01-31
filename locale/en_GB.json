@@ -50,6 +50,11 @@
         "editor_status_uploading": "Uploading code...",
         "editor_status_uploaded": "Code successfully sent to NanoPlay at {lastUploadDate}",
 
+        "editor_simulator_topLeftButton": "Top-left button (tl)",
+        "editor_simulator_topRightButton": "Top-right button (tr)",
+        "editor_simulator_bottomLeftButton": "Bottom-left button (bl)",
+        "editor_simulator_bottomRightButton": "Bottom-right button (br)",
+
         "editor_logSource_codeChecker": "Code checker",
 
         "toggleDarkMode": "Toggle dark mode",

@@ -20,6 +20,11 @@
     --blueText: white;
     --orange: #f5b342;
     --orangeText: white;
+    --simulatorRedButton: #fddcdc;
+    --simulatorGreenButton: #dcfddf;
+    --simulatorBlueButton: #dceffd;
+    --simulatorOrangeButton: #fdf5e3;
+    --simulatorScreen: #7fc5f7;
 }
 
 * {
@@ -537,6 +542,79 @@ body.dark .qrCode {
     display: block;
     font-size: 0.8em;
     opacity: 0.8;
+}
+
+.simulator {
+    position: relative;
+    width: 20vw;
+    height: 16vw;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.simulator button {
+    position: absolute;
+    height: 33%;
+    background-color: var(--simulatorBlueButton);
+    border-radius: 10px;
+    transition: 0.5s left, 0.5s right, 1s box-shadow;
+}
+
+.simulator button:nth-child(1) {
+    top: 10%;
+    left: 0;
+}
+
+.simulator button:nth-child(2) {
+    top: 10%;
+    right: 0;
+}
+
+.simulator button:nth-child(3) {
+    bottom: 20%;
+    left: 0;
+}
+
+.simulator button:nth-child(4) {
+    bottom: 20%;
+    right: 0;
+}
+
+.simulator button:nth-child(1):active, .simulator button:nth-child(3):active {
+    left: 2%;
+}
+
+.simulator button:nth-child(2):active, .simulator button:nth-child(4):active {
+    right: 2%;
+}
+
+.simulator .casing {
+    position: absolute;
+    top: 0;
+    left: 4%;
+    width: 92%;
+    height: 100%;
+    background-color: var(--blue);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.simulator .display {
+    position: absolute;
+    top: 15%;
+    left: 6%;
+    width: 88%;
+    height: 60%;
+    background-color: var(--simulatorScreen);
+    border-radius: 10px;
+}
+
+.simulator .display canvas {
+    width: 90%;
+    height: 82%;
+    margin: 5%;
+    image-rendering: pixelated;
 }
 
 #loadingCover {
