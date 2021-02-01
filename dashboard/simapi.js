@@ -38,6 +38,14 @@ namespace("com.subnodal.nanoplay.website.simulator.api", function(exports) {
         var invertColours = false;
         var files = {};
 
+        function close() {
+            handlers.close();
+        };
+
+        function statusBar(enable) {
+            handlers.statusBar(!!enable);
+        };
+
         function clear() {
             graphics.clear(sim, invert);
         }

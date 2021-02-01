@@ -24,6 +24,8 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
 
             this.canvasContext = this.canvas.getContext("2d");
             this.commands = {};
+            this.shouldClose = false;
+            this.shouldShowStatusBar = false;
             this.buttonStates = {};
             this.pinStates = new Array(6).fill(0);
             this.nfcUrl = "https://subnodal.com/np";
@@ -38,6 +40,8 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
 
         registerCommands() {
             this.commands = api.commandFactory(this, {
+                close: this.handleClose,
+                statusBar: this.handleStatusBar,
                 tl: {pressed: this.handleButtonPressFactory(exports.buttons.TL)},
                 tr: {pressed: this.handleButtonPressFactory(exports.buttons.TR)},
                 bl: {pressed: this.handleButtonPressFactory(exports.buttons.BL)},
@@ -49,6 +53,14 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
                 getTemperatureCelsius: this.handleGetTemperatureCelsius,
                 getLocaleCode: this.handleGetLocaleCode
             });
+        }
+
+        handleClose() {
+            this.shouldClose = true;
+        }
+
+        handleStatusBar(enable) {
+            this.shouldShowStatusBar = enable;
         }
 
         handleButtonPressFactory(button) {
