@@ -9,6 +9,7 @@
 
 namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
     var l10n = require("com.subnodal.subelements.l10n");
+    var safety = require("com.subnodal.nanoplay.webapi.safety");
 
     var editor = require("com.subnodal.nanoplay.website.editor");
     var graphics = require("com.subnodal.nanoplay.website.simulator.graphics");
@@ -61,6 +62,8 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
         }
 
         loadProgram(program) {
+            clearInterval(this.loopInterval);
+
             var exposedGlobals = {};
 
             for (var key in window) {
@@ -76,7 +79,7 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
             try {
                 this.programGlobal = Function(
                     "var start,loop;with(this){" +
-                    program +
+                    safety.makeSafe(program) +
                     "}return {start:start,loop:loop}"
                 ).bind(exposedGlobals)();
             } catch (e) {
