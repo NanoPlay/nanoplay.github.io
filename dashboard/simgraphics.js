@@ -43,7 +43,7 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
     exports.clear = function(sim, on) {
         sim.canvasContext.fillStyle = on ? exports.PIXEL_ON_COLOUR : exports.PIXEL_OFF_COLOUR;
 
-        sim.canvasContext.fillRect(0, 0, 127, 63);
+        sim.canvasContext.fillRect(0, 0, 128, 64);
     };
 
     exports.line = function(sim, x1, y1, x2, y2, on) {
@@ -121,21 +121,24 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
     };
 
     function twoPointRect(sim, x1, y1, x2, y2, fill, on) {
+        x1 = Math.round(x1);
+        x2 = Math.round(x2);
+        y1 = Math.round(y1);
+        y2 = Math.round(y2);
+
         var x = Math.min(x1, x2);
         var y = Math.min(y1, y2);
         var w = Math.abs(x2 - x1);
         var h = Math.abs(y2 - y1);
 
-        console.log(x, y, w, h, y1, y2);
-
         exports.rect(sim, x, y, w, h, fill, on);
     }
 
     exports.ellipse = function(sim, x, y, w, h, fill, on) {
-        var x1 = x;
-        var y1 = y;
-        var x2 = x1 + w;
-        var y2 = y1 + h;
+        var x1 = Math.round(x);
+        var y1 = Math.round(y);
+        var x2 = x1 + Math.round(w);
+        var y2 = y1 + Math.round(h);
 
         x = (x1 + x2) / 2;
         y = (y1 + y2) / 2;
@@ -245,8 +248,6 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
 
                     x++;
                 }
-
-                x++;
             }
         }
     };
@@ -270,11 +271,7 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
                 for (var cx = 0; cx < charWidth; cx++) {
                     width++;
                 }
-
-                width++;
             }
-
-            width--;
         }
 
         return width;

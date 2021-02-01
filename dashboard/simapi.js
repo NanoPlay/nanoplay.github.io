@@ -73,7 +73,7 @@ namespace("com.subnodal.nanoplay.website.simulator.api", function(exports) {
         function circle(x, y, radius) {
             typeAll(arguments, "number");
 
-            graphics.ellipse(sim, x - radius, y - radius, radius, radius, fillShapes, !invertColours);
+            graphics.ellipse(sim, x - radius, y - radius, 2 * radius, 2 * radius, fillShapes, !invertColours);
         }
 
         function ellipse(x, y, w, h) {
@@ -203,6 +203,7 @@ namespace("com.subnodal.nanoplay.website.simulator.api", function(exports) {
         }
 
         return {
+            close, statusBar,
             clear, fill, invert, line, rect, circle, ellipse, text, getTextWidth, getPixel, setPixel,
             tl, tr, bl, br, readPin, writePin,
             readFile, writeFile, getFileList,
