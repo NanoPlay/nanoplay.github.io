@@ -29,7 +29,7 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
     }
 
     exports.getPixel = function(sim, x, y) {
-        var imageData = sim.canvasContext.getImageData(sim, 1, 1).data;
+        var imageData = sim.canvasContext.getImageData(x, y, 1, 1).data;
 
         return rgbToHex(imageData[0], imageData[1], imageData[2]) == exports.PIXEL_ON_COLOUR;
     };
@@ -109,12 +109,14 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
 
     exports.rect = function(sim, x, y, w, h, fill, on) {
         sim.canvasContext.fillStyle = on ? exports.PIXEL_ON_COLOUR : exports.PIXEL_OFF_COLOUR;
-        sim.canvasContext.strokeStyle = on ? exports.PIXEL_ON_COLOUR : exports.PIXEL_OFF_COLOUR;
+
+        exports.line(sim, x, y, x + w, y, on);
+        exports.line(sim, x, y, x, y + h, on);
+        exports.line(sim, x + w, y, x + w, y + h, on);
+        exports.line(sim, x, y + h, x + w, y + h, on);
 
         if (fill) {
             sim.canvasContext.fillRect(x, y, w, h);
-        } else {
-            sim.canvasContext.strokeRect(x, y, w, h);
         }
     };
 
@@ -249,7 +251,7 @@ namespace("com.subnodal.nanoplay.website.simulator.graphics", function(exports) 
         }
     };
 
-    exports.textWidth = function(text, mini) {
+    exports.getTextWidth = function(text, mini) {
         var width = 0;
 
         if (mini) {
