@@ -18,6 +18,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var resources = require("com.subnodal.nanoplay.website.resources");
     var dialogs = require("com.subnodal.nanoplay.website.dialogs");
     var communications = require("com.subnodal.nanoplay.website.communications");
+    var simulator = require("com.subnodal.nanoplay.website.simulator");
 
     const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
 
@@ -30,6 +31,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     };
 
     var cseInstance = null;
+    var simulatorInstance = null;
     var manifest = {
         id: null,
         name: {}
@@ -336,6 +338,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                             subElements.render();
 
                             document.getElementById("loadingCover").style.display = "none";
+
+                            simulatorInstance.loadProgram(cseInstance.code);
+                            simulatorInstance.start();
                         });
                     }
 
@@ -343,6 +348,28 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     canAcceptCodeLoad = false;
                 });
             });
+
+            simulatorInstance = new simulator.Simulator(document.getElementById("simulatorCanvas"));
+
+            ["mousedown", "touchstart"].forEach(function(i) {
+                document.getElementById("simulatorButtonTl").addEventListener(i, () => simulatorInstance.buttonStates[simulator.buttons.TL] = true);
+                document.getElementById("simulatorButtonTr").addEventListener(i, () => simulatorInstance.buttonStates[simulator.buttons.TR] = true);
+                document.getElementById("simulatorButtonBl").addEventListener(i, () => simulatorInstance.buttonStates[simulator.buttons.BL] = true);
+                document.getElementById("simulatorButtonBr").addEventListener(i, () => simulatorInstance.buttonStates[simulator.buttons.BR] = true);
+            });
+
+            ["mouseup", "touchend"].forEach(function(i) {
+                window.addEventListener(i, function() {
+                    simulatorInstance.buttonStates[simulator.buttons.TL] = false;
+                    simulatorInstance.buttonStates[simulator.buttons.TR] = false;
+                    simulatorInstance.buttonStates[simulator.buttons.BL] = false;
+                    simulatorInstance.buttonStates[simulator.buttons.BR] = false;
+                });
+            });
+
+            simulatorInstance.catchError = function(error) {
+                exports.addToLog(error.toString(), _("editor_logSource_simulator"), "error");
+            };
 
             setInterval(function() {
                 if (wasOnDarkTheme != document.body.classList.contains("dark")) {
@@ -355,12 +382,6 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     }
 
                     cseInstance.render();
-                }
-
-                if (lastTypedCode != cseInstance.code) {
-                    lastTypedCode = cseInstance.code;
-                    
-                    document.getElementById("syncStatusIcon").innerText = "save";
                 }
             });
 
@@ -381,6 +402,19 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     }
                 }
             }, 1000);
+
+            setInterval(function() {
+                if (lastTypedCode != cseInstance.code) {
+                    lastTypedCode = cseInstance.code;
+                    
+                    document.getElementById("syncStatusIcon").innerText = "save";
+
+                    exports.clearLog();
+
+                    simulatorInstance.loadProgram(cseInstance.code);
+                    simulatorInstance.start();
+                }
+            }, 3000);
 
             window.onbeforeunload = function() {
                 if (!exports.isSynced()) {

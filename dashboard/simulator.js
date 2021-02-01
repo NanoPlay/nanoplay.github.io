@@ -30,7 +30,6 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
             this.commands = {};
             this.programGlobal = {};
             this.loopInterval = null;
-            this.shouldClose = false;
             this.showStatusBar = false;
             this.buttonStates = {};
             this.pinStates = new Array(6).fill(0);
@@ -83,8 +82,9 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
                     "}return {start:start,loop:loop}"
                 ).bind(exposedGlobals)();
             } catch (e) {
-                // TODO: Handle errors and show them in error log
-                console.error(e);
+                this.catchError(e);
+
+                clearInterval(this.loopInterval);
             }
         }
 
@@ -94,14 +94,26 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
             clearInterval(this.loopInterval);
 
             if (this.programGlobal["start"] != undefined) {
-                this.programGlobal.start();
+                try {
+                    this.programGlobal.start();
+                } catch (e) {
+                    this.catchError(e);
+
+                    clearInterval(this.loopInterval);
+                }
             }
 
             if (this.programGlobal["loop"] != undefined) {
                 this.loopInterval = setInterval(function() {
                     graphics.clear(thisScope, false);
 
-                    thisScope.programGlobal.loop();
+                    try {
+                        thisScope.programGlobal.loop();
+                    } catch (e) {
+                        thisScope.catchError(e);
+        
+                        clearInterval(thisScope.loopInterval);
+                    }
 
                     if (thisScope.showStatusBar) {
                         graphics.rect(thisScope, 0, 0, 127, 6, true, false);
@@ -113,7 +125,7 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
 
                         graphics.line(thisScope, 0, 7, 128, 7, true);
                     }
-                }, 200);
+                }, 100);
             }
         }
 
@@ -121,7 +133,9 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
             var thisScope = this;
 
             return function() {
-                thisScope.shouldClose = true;
+                clearInterval(thisScope.loopInterval);
+
+                graphics.clear(thisScope, false);
             };
         }
 
@@ -133,10 +147,10 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
             };
         }
 
-        handleButtonPressFactory() {
+        handleButtonPressFactory(button) {
             var thisScope = this;
 
-            return function(button) {
+            return function() {
                 return thisScope.buttonStates[button];
             };
         }
@@ -182,5 +196,7 @@ namespace("com.subnodal.nanoplay.website.simulator", function(exports) {
                 return editor.getSupportedLanguage();
             };
         }
+
+        catchError() {}
     };
 });

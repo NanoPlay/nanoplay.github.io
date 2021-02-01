@@ -75,13 +75,13 @@
                 <div class="code" id="codeEditor"></div>
                 <div>
                     <div class="simulator">
-                        <button aria-label="{{ _('editor_simulator_topLeftButton') }}" title="{{ _('editor_simulator_topLeftButton') }}"></button>
-                        <button aria-label="{{ _('editor_simulator_topRightButton') }}" title="{{ _('editor_simulator_topRightButton') }}"></button>
-                        <button aria-label="{{ _('editor_simulator_bottomLeftButton') }}" title="{{ _('editor_simulator_bottomLeftButton') }}"></button>
-                        <button aria-label="{{ _('editor_simulator_bottomRightButton') }}" title="{{ _('editor_simulator_bottomRightButton') }}"></button>
+                        <button aria-label="{{ _('editor_simulator_topLeftButton') }}" title="{{ _('editor_simulator_topLeftButton') }}" id="simulatorButtonTl"></button>
+                        <button aria-label="{{ _('editor_simulator_topRightButton') }}" title="{{ _('editor_simulator_topRightButton') }}" id="simulatorButtonTr"></button>
+                        <button aria-label="{{ _('editor_simulator_bottomLeftButton') }}" title="{{ _('editor_simulator_bottomLeftButton') }}" id="simulatorButtonBl"></button>
+                        <button aria-label="{{ _('editor_simulator_bottomRightButton') }}" title="{{ _('editor_simulator_bottomRightButton') }}" id="simulatorButtonBr"></button>
                         <div class="casing">
                             <div class="display">
-                                <canvas width="128" height="64"></canvas>
+                                <canvas width="128" height="64" id="simulatorCanvas"></canvas>
                             </div>
                         </div>
                     </div>

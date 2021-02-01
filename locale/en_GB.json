@@ -56,6 +56,7 @@
         "editor_simulator_bottomRightButton": "Bottom-right button (br)",
 
         "editor_logSource_codeChecker": "Code checker",
+        "editor_logSource_simulator": "Simulator",
 
         "toggleDarkMode": "Toggle dark mode",
         "backToDashboard": "Back to dashboard",
