@@ -91,12 +91,12 @@ nav a {
     padding-left: 0.5em;
     padding-right: 0.5em;
     color: inherit;
-    text-decoration: none;
     vertical-align: top;
     transition: 1s opacity;
 }
 
 nav a:hover, nav a:active {
+    text-decoration: none;
     opacity: 0.5;
 }
 
@@ -139,6 +139,12 @@ nav.dashboard a icon {
 
 nav.dashboard .floatEnd > a:last-child icon {
     padding-inline-end: 5px;
+}
+
+nav.dashboard.flat {
+    background-color: inherit;
+    color: inherit;
+    box-shadow: none;
 }
 
 main {
@@ -358,6 +364,10 @@ loader::after {
 
 loader.entireScreen {
     margin-top: calc(50vh - 4em);
+}
+
+loader.afterNav {
+    margin-top: calc(50vh - 8em);
 }
 
 dialog {
@@ -635,6 +645,35 @@ body.dark .qrCode {
 
 #loadingCover loader::before, #loadingCover loader::after {
     background-color: var(--shade);
+}
+
+#dashboardIcons {
+    margin-top: calc(50vh - 10em);
+    text-align: center;
+}
+
+#dashboardIcons a {
+    display: inline-block;
+    width: 120px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    color: inherit;
+}
+
+#dashboardIcons a:hover {
+    text-decoration: none;
+}
+
+#dashboardIcons a img {
+    width: 100%;
+    margin-bottom: -10px;
+    opacity: 1;
+    transition: 1s filter, 1s opacity;
+}
+
+#dashboardIcons a:hover img {
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.2));
+    opacity: 0.8;
 }
 
 #editorArea {
