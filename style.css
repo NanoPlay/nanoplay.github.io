@@ -288,6 +288,12 @@ label input {
     vertical-align: middle;
 }
 
+label > div {
+    display: inline-block;
+    width:  calc(100% - 210px);
+    vertical-align: top;
+}
+
 iframe {
     width: 100%;
     height: 300px;
@@ -749,6 +755,15 @@ body.dark .qrCode {
     text-overflow: ellipsis;
 }
 
+#editorIconArea canvas {
+    width: calc(200px);
+    height: calc(200px * calc(17 / 44));
+    height: 120px;
+    background-color: var(--simulatorScreen);
+    border-radius: 10px;
+    image-rendering: pixelated;
+}
+
 @media (max-width: 800px) {
     .simulator {
         width: 30vw;
@@ -781,6 +796,11 @@ body.dark .qrCode {
     .appCard {
         display: block;
         width: calc(100% - 1em);
+    }
+
+    #editorIconArea canvas {
+        width: calc(80vw);
+        height: calc(80vw * calc(17 / 44));
     }
 }
 

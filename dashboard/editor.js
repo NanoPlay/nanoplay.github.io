@@ -51,6 +51,10 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
     var loadedAppsList = null;
 
+    var iconEditorCanvasElement = null;
+    var iconEditorMouseIsDown = false;
+    var iconEditorLastPixelState = null;
+
     exports.getManifest = function() {
         return manifest;
     };
@@ -304,6 +308,22 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         });
     };
 
+    exports.getEditorIconPixel = function(x, y) {
+        var imageData = iconEditorCanvasElement.getContext("2d").getImageData(x, y, 1, 1).data;
+
+        return imageData[3] == 255;
+    };
+
+    exports.setEditorIconPixel = function (x, y, on = true) {
+        iconEditorCanvasElement.getContext("2d").fillStyle = "#000000";
+
+        if (on) {
+            iconEditorCanvasElement.getContext("2d").fillRect(Math.round(x), Math.round(y), 1, 1);
+        } else {
+            iconEditorCanvasElement.getContext("2d").clearRect(Math.round(x), Math.round(y), 1, 1);
+        }
+    };
+
     subElements.ready(function() {
         Promise.all([
             requests.getJson("https://subnodal.com/csEngine/languages/js.json"),
@@ -370,6 +390,36 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
             simulatorInstance.catchError = function(error) {
                 exports.addToLog(error.toString(), _("editor_logSource_simulator"), "error");
             };
+
+            iconEditorCanvasElement = document.querySelector("#editorIconArea canvas");
+
+            ["mousedown", "mousemove", "touchstart", "touchmove"].forEach(function(i) {
+                iconEditorCanvasElement.addEventListener(i, function(event) {
+                    var x = Math.floor(((i == "touchstart" || i == "touchmove" ? event.targetTouches[0] : event).pageX - iconEditorCanvasElement.getBoundingClientRect().left) * (44 / iconEditorCanvasElement.clientWidth));
+                    var y = Math.floor(((i == "touchstart" || i == "touchmove" ? event.targetTouches[0] : event).pageY - iconEditorCanvasElement.getBoundingClientRect().top) * (17 / iconEditorCanvasElement.clientHeight));
+
+                    if (i == "mousedown" || i == "touchstart") {
+                        if (!iconEditorMouseIsDown && iconEditorLastPixelState == null) {
+                            iconEditorLastPixelState = !exports.getEditorIconPixel(x, y);
+                        }
+
+                        iconEditorMouseIsDown = true;
+                    }
+
+                    if (iconEditorMouseIsDown) {
+                        exports.setEditorIconPixel(x, y, iconEditorLastPixelState);
+                    }
+
+                    event.preventDefault();
+                });
+            });
+
+            ["mouseup", "touchend"].forEach(function(i) {
+                iconEditorCanvasElement.addEventListener(i, function() {
+                    iconEditorMouseIsDown = false;
+                    iconEditorLastPixelState = null;
+                });
+            });
 
             setInterval(function() {
                 if (wasOnDarkTheme != document.body.classList.contains("dark")) {

@@ -23,6 +23,7 @@
         "editor_newApp": "New app",
         "editor_appName": "App name",
         "editor_defaultAppName": "Untitled App",
+        "editor_appIcon": "App icon",
         "editor_translateThis": "Translate this",
         "editor_translateAppName": "Translate app name",
         "editor_noTranslation": "(No translation)",
