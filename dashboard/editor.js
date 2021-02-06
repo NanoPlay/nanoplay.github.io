@@ -13,6 +13,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var requests = require("com.subnodal.subelements.requests");
     var l10n = require("com.subnodal.subelements.l10n");
     var csengine = require("com.subnodal.codeslate.engine");
+    var icon = require("com.subnodal.nanoplay.webapi.icon");
     var _ = l10n.translate;
 
     var resources = require("com.subnodal.nanoplay.website.resources");
@@ -21,6 +22,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var simulator = require("com.subnodal.nanoplay.website.simulator");
 
     const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
+    const DEFAULT_APP_ICON = "AAAAAAAAA////AAAf///YAAH///+AABAAAAgAAX/vgIAAEAAACAABe79wgAAQAAAIAAF+94CAABAAAAgAAW+/4IAAEAAACAABfvv4gAAQAAAIAAD///8AAAAAAAAAA==";
 
     exports.statuses = {
         DISCONNECTED: 0,
@@ -108,12 +110,14 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
 
     exports.loadAppSettingsDialog = function() {
         document.getElementById("appNameInput").value = manifest.name[exports.getSupportedLanguage()] || "";
+        exports.setEditorIconBase64(manifest.icon || DEFAULT_APP_ICON);
 
         dialogs.open("appSettings");
     };
 
     exports.saveAppSettingsDialog = function() {
         manifest.name[exports.getSupportedLanguage()] = document.getElementById("appNameInput").value;
+        manifest.icon = exports.getEditorIconBase64() != DEFAULT_APP_ICON ? exports.getEditorIconBase64() : null;
 
         dialogs.close("appSettings");
 
@@ -314,7 +318,7 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         return imageData[3] == 255;
     };
 
-    exports.setEditorIconPixel = function (x, y, on = true) {
+    exports.setEditorIconPixel = function(x, y, on = true) {
         iconEditorCanvasElement.getContext("2d").fillStyle = "#000000";
 
         if (on) {
@@ -322,6 +326,30 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
         } else {
             iconEditorCanvasElement.getContext("2d").clearRect(Math.round(x), Math.round(y), 1, 1);
         }
+    };
+
+    exports.setEditorIconBase64 = function(base64, w, h) {
+        for (var y = 0; y < 17; y++) {
+            for (var x = 0; x < 44; x++) {
+                exports.setEditorIconPixel(x, y, icon.getPixelAt(base64, x, y));
+            }
+        }
+    };
+
+    exports.getEditorIconBase64 = function() {
+        var map = "";
+
+        for (var y = 0; y < 17; y++) {
+            for (var x = 0; x < 44; x++) {
+                map += exports.getEditorIconPixel(x, y) ? "#" : " ";
+            }
+
+            if (y < 16) {
+                map += "\n";
+            }
+        }
+
+        return icon.create(map);
     };
 
     subElements.ready(function() {
