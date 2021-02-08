@@ -777,6 +777,16 @@ body.dark .qrCode {
     }
 }
 
+@media (max-width: 600px) {
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: unset;
+    }
+}
+
 @media (max-width: 550px) {
     label span:first-child {
         display: block;
@@ -804,14 +814,6 @@ body.dark .qrCode {
 }
 
 @media (max-width: 500px) {
-    .desktop {
-        display: none;
-    }
-
-    .mobile {
-        display: unset;
-    }
-
     .split > * {
         flex-basis: 100%;
     }
