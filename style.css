@@ -148,7 +148,7 @@ nav.dashboard.flat {
 }
 
 main {
-    height: calc(100vh - 3em);
+    min-height: calc(100vh - 3em);
     margin-top: 3em;
     padding: 1em;
     padding-left: 10vw;
@@ -158,6 +158,10 @@ main {
 main.wide {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+main.dashboard {
+    height: calc(100vh - 3em);
 }
 
 nav .menu {
@@ -470,6 +474,10 @@ dialog.big .dialogContent {
     align-self: center;
 }
 
+.split.fillHeight, .split.fillHeight > * {
+    min-height: 100%;
+}
+
 .art {
     width: 100%;
 }
@@ -763,6 +771,49 @@ body.dark .qrCode {
     image-rendering: pixelated;
 }
 
+#managerPreview {
+    --widthBasis: 30vw;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+#managerPreview .device {
+    position: relative;
+    width: var(--widthBasis);
+    margin: auto;
+}
+
+#managerPreview .device .body {
+    width: var(--widthBasis);
+    -webkit-user-drag: none;
+}
+
+#managerPreview .device .screen {
+    position: absolute;
+    top: calc(0.18 * var(--widthBasis));
+    left: calc(0.25 * var(--widthBasis));
+    width: calc(0.68 * var(--widthBasis));
+    height: calc(0.34 * var(--widthBasis));
+    background-image: url("/media/manager/home.png");
+    background-size: cover;
+    background-color: #7fc5f7;
+    background-blend-mode: multiply;
+    transform: perspective(calc(0.6 * var(--widthBasis))) rotateY(7deg);
+}
+
+#managerOptions {
+    display: flex;
+    align-items: center;
+}
+
+#managerOptions div {
+    width: 100%;
+    max-height: 60vh;
+    margin-inline-end: 5vw;
+    overflow: auto;
+}
+
 @media (max-width: 800px) {
     .simulator {
         width: 30vw;
@@ -821,6 +872,21 @@ body.dark .qrCode {
     .simulator {
         width: 80vw;
         height: 64vw;
+    }
+
+    #managerPreview {
+        --widthBasis: 60vw;
+        height: 60vw;
+    }
+
+    #managerOptions {
+        height: calc(100vh - 60vw - 5em);
+        align-items: flex-start;
+    }
+
+    #managerOptions div {
+        max-height: calc(100vh - 60vw - 5em);
+        margin-inline-end: 0;
     }
 }
 

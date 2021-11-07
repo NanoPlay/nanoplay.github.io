@@ -12,6 +12,8 @@ namespace("com.subnodal.nanoplay.website.firstauth", function(exports) {
 
     var resources = require("com.subnodal.nanoplay.website.resources");
 
+    window.firstAuth = exports;
+
     exports.finishSetup = function() {
         var chosenUsername = document.getElementById("username").value;
 

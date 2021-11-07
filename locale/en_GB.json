@@ -61,6 +61,8 @@
         "editor_logSource_codeChecker": "Code checker",
         "editor_logSource_simulator": "Simulator",
 
+        "manager": "Manager",
+
         "toggleDarkMode": "Toggle dark mode",
         "backToDashboard": "Back to dashboard",
 

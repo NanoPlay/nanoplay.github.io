@@ -41,33 +41,33 @@
                 <img src="/media/logo.svg" alt="{{ _('nanoplay')}}" />
             </a>
             <div class="floatEnd">
-                <a href="javascript:require('com.subnodal.nanoplay.website.dashboard').toggleTheme();" title="{{ _('toggleDarkMode') }}" aria-label="{{ _('toggleDarkMode') }}" id="darkThemeButton"><icon>dark_mode</icon></a>
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').isSyncing() }}">
+                <a href="javascript:dashboard.toggleTheme();" title="{{ _('toggleDarkMode') }}" aria-label="{{ _('toggleDarkMode') }}" id="darkThemeButton"><icon>dark_mode</icon></a>
+                <s-if condition="{{ editor.isSyncing() }}">
                     <a href="javascript:void(0);" title="{{ _('editor_savingApp') }}" aria-label="{{ _('editor_savingApp') }}"><icon>cloud_upload</icon></a>
                 </s-if>
                 <s-else>
-                    <a href="javascript:require('com.subnodal.nanoplay.website.editor').syncToCloud();" title="{{ _('editor_saveApp') }}" aria-label="{{ _('editor_saveApp') }}"><icon id="syncStatusIcon">save</icon></a>
+                    <a href="javascript:editor.syncToCloud();" title="{{ _('editor_saveApp') }}" aria-label="{{ _('editor_saveApp') }}"><icon id="syncStatusIcon">save</icon></a>
                 </s-else>
-                <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadOpenAppDialog();" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
+                <a href="javascript:editor.loadOpenAppDialog();" title="{{ _('editor_seeApps') }}" aria-label="{{ _('editor_seeApps') }}"><icon>topic</icon></a>
                 <a href="/dashboard" title="{{ _('backToDashboard') }}" aria-label="{{ _('backToDashboard') }}"><icon>apps</icon></a>
             </div>
         </nav>
-        <main class="wide">
+        <main class="dashboard wide">
             <h2 id="editorAppName">
-                <span onclick="require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" class="editable">{{ require("com.subnodal.nanoplay.website.editor").getAppName() }}</span>
-                <a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.CONNECTING }}">
+                <span onclick="editor.loadAppSettingsDialog();" class="editable">{{ editor.getAppName() }}</span>
+                <a href="javascript:editor.loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
+                <s-if condition="{{ editor.getStatus() == editor.statuses.CONNECTING }}">
                     <button disabled class="green" translate>editor_connecting</button>
                 </s-if>
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getStatus() == require('com.subnodal.nanoplay.website.editor').statuses.UPLOADING }}">
+                <s-if condition="{{ editor.getStatus() == editor.statuses.UPLOADING }}">
                     <button disabled class="green" translate>editor_uploading</button>
                 </s-if>
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').allowedToCommunicate() }}">
+                <s-if condition="{{ editor.allowedToCommunicate() }}">
                     <span class="desktop">
-                        <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" class="green" translate>editor_sendToNanoplay</button>
+                        <button onclick="editor.uploadApp();" class="green" translate>editor_sendToNanoplay</button>
                     </span>
                     <span class="mobile">
-                        <button onclick="require('com.subnodal.nanoplay.website.editor').uploadApp();" title="{{ _('editor_sendToNanoplay') }}" aria-label="{{ _('editor_sendToNanoplay') }}" class="green"><icon>send</icon></button>
+                        <button onclick="editor.uploadApp();" title="{{ _('editor_sendToNanoplay') }}" aria-label="{{ _('editor_sendToNanoplay') }}" class="green"><icon>send</icon></button>
                     </span>
                 </s-if>
             </h2>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </main>
-        <div id="editorStatus">{{ require("com.subnodal.nanoplay.website.editor").getStatusMessage() }}</div>
+        <div id="editorStatus">{{ editor.getStatusMessage() }}</div>
         <dialog class="big" id="appSettings">
             <div class="dialogContent">
                 <h2 translate>editor_appSettings</h2>
@@ -100,7 +100,7 @@
                 </label>
                 <label>
                     <span></span>
-                    <span><a href="javascript:require('com.subnodal.nanoplay.website.editor').loadAppNamesDialog();"><icon aria-hidden="true">translate</icon> {{ _('editor_translateThis') }}</a></span>
+                    <span><a href="javascript:editor.loadAppNamesDialog();"><icon aria-hidden="true">translate</icon> {{ _('editor_translateThis') }}</a></span>
                 </label>
                 <label>
                     <span translate>editor_appIcon</span>
@@ -110,7 +110,7 @@
                 </label>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppSettingsDialog();" class="green" translate>ok</button>
+                <button onclick="editor.saveAppSettingsDialog();" class="green" translate>ok</button>
             </div>
         </dialog>
         <dialog class="big" id="appNameTranslate">
@@ -126,20 +126,20 @@
                 </label>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.editor').saveAppNamesDialog();" class="green" translate>done</button>
+                <button onclick="editor.saveAppNamesDialog();" class="green" translate>done</button>
             </div>
         </dialog>
         <dialog class="big" id="openApp">
             <div class="dialogContent">
                 <h2 translate>editor_yourApps</h2>
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getAppsList() == null }}">
+                <s-if condition="{{ editor.getAppsList() == null }}">
                     <loader></loader>
                 </s-if>
                 <s-else>
-                    <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getAppsList().length > 0 }}">
-                        <s-each in="require('com.subnodal.nanoplay.website.editor').getAppsList()" valuevar="app">
+                    <s-if condition="{{ editor.getAppsList().length > 0 }}">
+                        <s-each in="editor.getAppsList()" valuevar="app">
                             <a href="editor.html?id={{ app.manifest.id }}" class="appCard">
-                                <span class="appCardTitle">{{ app.manifest.name[require("com.subnodal.nanoplay.website.editor").getSupportedLanguage()] || _("editor_defaultAppName") }}</span>
+                                <span class="appCardTitle">{{ app.manifest.name[editor.getSupportedLanguage()] || _("editor_defaultAppName") }}</span>
                                 <span class="appCardDateModified">{{ require("com.subnodal.subelements.l10n").formatValue(new Date(app.manifest.dateModified), {dateStyle: "medium"}) }}</span>
                             </a>
                         </s-each>
@@ -154,7 +154,7 @@
                 </s-else>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>cancel</button>
+                <button onclick="dialogs.closeAll();" class="red" translate>cancel</button>
                 <button onclick="window.location.href = 'editor.html';" class="green" translate>editor_newApp</button>
             </div>
         </dialog>
@@ -166,12 +166,12 @@
                 </div>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="blue" translate>ok</button>
+                <button onclick="dialogs.closeAll();" class="blue" translate>ok</button>
             </div>
         </dialog>
         <dialog id="connectionError">
             <div class="dialogContent">
-                <s-if condition="{{ require('com.subnodal.nanoplay.website.editor').getUnsuccessfulConnections() > 2 }}">
+                <s-if condition="{{ editor.getUnsuccessfulConnections() > 2 }}">
                     <p>{{ _('editor_connectionErrorPersistent') }} <a href="javascript:window.location.reload();" translate>editor_connectionErrorPersistentLink</a></p>
                 </s-if>
                 <s-else>
@@ -179,7 +179,7 @@
                 </s-else>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>ok</button>
+                <button onclick="dialogs.closeAll();" class="red" translate>ok</button>
             </div>
         </dialog>
         <dialog id="communicationsError">
@@ -187,7 +187,7 @@
                 <p translate>editor_communicationsError</p>
             </div>
             <div class="dialogButtons">
-                <button onclick="require('com.subnodal.nanoplay.website.dialogs').closeAll();" class="red" translate>ok</button>
+                <button onclick="dialogs.closeAll();" class="red" translate>ok</button>
             </div>
         </dialog>
         <div id="loadingCover">

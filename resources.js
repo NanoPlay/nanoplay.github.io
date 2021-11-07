@@ -8,6 +8,8 @@
 */
 
 namespace("com.subnodal.nanoplay.website.resources", function(exports) {
+    var subElements = require("com.subnodal.subelements");
+
     var firebaseConfig = {
         apiKey: "AIzaSyDE0WI96lbx9mUXjN-ohNAWdBljrsB_B1A",
         authDomain: "nanoplay-platform.firebaseapp.com",
@@ -149,20 +151,22 @@ namespace("com.subnodal.nanoplay.website.resources", function(exports) {
         });
     };
 
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            currentUser.uid = user.uid;
-
-            firebase.database().ref("users/" + currentUser.uid + "/username").on("value", function(snapshot) {
-                currentUser.username = snapshot.val();
-
-                triggerUserChangeListeners(true, currentUser.username == null);
-            });
-        } else {
-            currentUser.uid = null;
-            currentUser.username = null;
-
-            triggerUserChangeListeners(false, false);
-        }
+    subElements.ready(function() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser.uid = user.uid;
+    
+                firebase.database().ref("users/" + currentUser.uid + "/username").on("value", function(snapshot) {
+                    currentUser.username = snapshot.val();
+    
+                    triggerUserChangeListeners(true, currentUser.username == null);
+                });
+            } else {
+                currentUser.uid = null;
+                currentUser.username = null;
+    
+                triggerUserChangeListeners(false, false);
+            }
+        });
     });
 });

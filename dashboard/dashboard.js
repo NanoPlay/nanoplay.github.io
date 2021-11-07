@@ -6,12 +6,15 @@
     https://nanoplay.subnodal.com
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
+
 namespace("com.subnodal.nanoplay.website.dashboard", function(exports) {
     var subElements = require("com.subnodal.subelements");
 
     var resources = require("com.subnodal.nanoplay.website.resources");
     
     var darkThemeEnabled = false;
+
+    window.dashboard = exports;
 
     exports.toggleTheme = function() {
         darkThemeEnabled = !darkThemeEnabled;
