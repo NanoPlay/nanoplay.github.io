@@ -74,7 +74,7 @@
         "manager": "Manager",
         "manager_connect": "Connect to your NanoPlay",
         "manager_connectDescription": "To access your NanoPlay's settings, you'll need to connect to your NanoPlay using Bluetooth.",
-        "manager_connectionError": "Looks like we couldsn't connect to your NanoPlay! Try connecting again.",
+        "manager_connectionError": "Looks like we couldn't connect to your NanoPlay! Try connecting again.",
         "manager_noBluetooth": "Unfortunately, this device doesn't have Bluetooth. Try using another device (such as a smartphone) instead.",
         "manager_storageInfo": "Storage {percentage}% full · {bytesFree} bytes free",
         "manager_noApps": "You have no apps on this NanoPlay.",
