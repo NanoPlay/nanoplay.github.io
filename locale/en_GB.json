@@ -10,6 +10,18 @@
         "shop": "Shop",
         "dashboard": "Dashboard",
 
+        "ok": "OK",
+        "cancel": "Cancel",
+        "done": "Done",
+        "open": "Open",
+        "edit": "Edit",
+        "delete": "Delete",
+        "connect": "Connect",
+        "connecting": "Connecting...",
+        "upload": "Upload",
+        "uploading": "Uploading...",
+        "untitled": "Untitled",
+
         "signIn_title": "Let's go!",
         "signIn_description": "Sign in with your Subnodal Account to get coding! Your code, apps, settings and more will all be stored with your Subnodal Account for you to access from anywhere.",
         "signIn_signUpHint": "Don't have a Subnodal Account yet? Signing up is free and easy!",
@@ -32,8 +44,6 @@
         "editor_noAppsYet": "No apps yet!",
         "editor_noAppsYetMessage": "Once you've coded some apps, they'll appear here for you to open later.",
         "editor_sendToNanoplay": "Send to NanoPlay",
-        "editor_connecting": "Connecting...",
-        "editor_uploading": "Uploading...",
         "editor_noErrorsYet": "No errors yet!",
         "editor_noBluetooth": "No Bluetooth? Don't worry! Visit the NanoPlay editor on your mobile phone to connect to your NanoPlay.",
         "editor_noBluetoothQrCode": "Point your phone's camera at this QR code to quickly visit the NanoPlay editor",
@@ -62,13 +72,17 @@
         "editor_logSource_simulator": "Simulator",
 
         "manager": "Manager",
+        "manager_connect": "Connect to your NanoPlay",
+        "manager_connectDescription": "To access your NanoPlay's settings, you'll need to connect to your NanoPlay using Bluetooth.",
+        "manager_connectionError": "Looks like we couldsn't connect to your NanoPlay! Try connecting again.",
+        "manager_noBluetooth": "Unfortunately, this device doesn't have Bluetooth. Try using another device (such as a smartphone) instead.",
+        "manager_storageInfo": "Storage {percentage}% full · {bytesFree} bytes free",
+        "manager_noApps": "You have no apps on this NanoPlay.",
+        "manager_applyingSetting": "Applying setting...",
+        "manager_gettingApps": "Getting apps...",
+        "manager_deletingApp": "Deleting app...",
 
         "toggleDarkMode": "Toggle dark mode",
-        "backToDashboard": "Back to dashboard",
-
-        "ok": "OK",
-        "cancel": "Cancel",
-        "done": "Done",
-        "open": "Open"
+        "backToDashboard": "Back to dashboard"
     }
 }

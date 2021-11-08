@@ -57,10 +57,10 @@
                 <span onclick="editor.loadAppSettingsDialog();" class="editable">{{ editor.getAppName() }}</span>
                 <a href="javascript:editor.loadAppSettingsDialog();" title="{{ _('editor_appSettings') }}" class="hidden" aria-label="{{ _('editor_appSettings') }}"><icon>settings</icon></a>
                 <s-if condition="{{ editor.getStatus() == editor.statuses.CONNECTING }}">
-                    <button disabled class="green" translate>editor_connecting</button>
+                    <button disabled class="green" translate>connecting</button>
                 </s-if>
                 <s-if condition="{{ editor.getStatus() == editor.statuses.UPLOADING }}">
-                    <button disabled class="green" translate>editor_uploading</button>
+                    <button disabled class="green" translate>uploading</button>
                 </s-if>
                 <s-if condition="{{ editor.allowedToCommunicate() }}">
                     <span class="desktop">

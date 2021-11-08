@@ -52,8 +52,60 @@
                 </div>
                 <div id="managerOptions">
                     <div>
-                        <h2>Manager coming soon!</h2>
-                        <p>Our NanoPlay manager is still in development! Come back later when we have something to show.</p>
+                        <s-if condition="{{ manager.getCurrentNanoplay().isConnected }}" class="menu">
+                            <s-if condition="{{ manager.getCurrentPage() == manager.pages.GENERAL }}">
+                                <h1>{{ manager.getCurrentNanoplay().name }}</h1>
+                                <progress value="{{ (manager.MAXIMUM_FREE_STORAGE - manager.getLoadedFreeStorage()) / manager.MAXIMUM_FREE_STORAGE }}"></progress>
+                                <p>{{ _("manager_storageInfo", {percentage: Math.max(Math.round(((manager.MAXIMUM_FREE_STORAGE - manager.getLoadedFreeStorage()) / manager.MAXIMUM_FREE_STORAGE) * 100), 0), bytesFree: manager.getLoadedFreeStorage()}) }}</p>
+                                <button onclick="manager.getAppsList();">Manage apps</button>
+                                <h2>System update</h2>
+                                <p>Your NanoPlay is up-to-date on version 0.2.6!</p>
+                                <button data-preview="version">Apply update again</button>
+                                <h2>General settings</h2>
+                                <button data-preview="syncTime">Sync current time</button>
+                                <button data-preview="backlightOn">Turn backlight off</button>
+                                <label data-preview="language">
+                                    <span>Language</span>
+                                    <select>
+                                        <option value="en_GB">English (United Kingdom)</option>
+                                        <option value="fr_FR">Français (France)</option>
+                                    </select>
+                                </label>
+                            </s-if>
+                            <s-if condition="{{ manager.getCurrentPage() == manager.pages.APPS }}">
+                                <button onclick="manager.setCurrentPage(manager.pages.GENERAL);" class="back">Back</button>
+                                <h2>Installed apps</h2>
+                                <s-each in="manager.getLoadedAppsList()" keyvar="appId" valuevar="appManifest">
+                                    <div class="app">
+                                        <strong>{{ appManifest.name[l10n.getLocaleCode()] || _("untitled") }}</strong>
+                                        <div class="options">
+                                            <button onclick="window.location.href = '/dashboard/editor.html?id=' + encodeURIComponent(event.target.getAttribute('data-appid'));" data-appid="{{ appId }}" translate>edit</button>
+                                            <button onclick="manager.deleteApp(event.target.getAttribute('data-appid'));" data-appid="{{ appId }}" class="red" translate>delete</button>
+                                        </div>
+                                    </div>
+                                </s-each>
+                                <s-if condition="{{ Object.keys(manager.getLoadedAppsList()).length == 0 }}">
+                                    <p translate>manager_noApps</p>
+                                </s-if>
+                            </s-if>
+                        </s-if>
+                        <s-else>
+                            <h2 translate>manager_connect</h2>
+                            <p translate>manager_connectDescription</p>
+                            <s-if condition="{{ !!navigator.bluetooth }}">
+                                <button onclick="manager.connect();" id="connectButton" translate>connect</button>
+                                <p id="connectError"></p>
+                            </s-if>
+                            <s-else>
+                                <p translate>manager_noBluetooth</p>
+                            </s-else>
+                        </s-else>
+                    </div>
+                    <div hidden id="loading">
+                        <div>
+                            <loader></loader>
+                            <p id="loadingMessage"></p>
+                        </div>
                     </div>
                 </div>
             </div>

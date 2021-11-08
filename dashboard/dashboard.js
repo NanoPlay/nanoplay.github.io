@@ -11,10 +11,12 @@ namespace("com.subnodal.nanoplay.website.dashboard", function(exports) {
     var subElements = require("com.subnodal.subelements");
 
     var resources = require("com.subnodal.nanoplay.website.resources");
+    var dialogs = require("com.subnodal.nanoplay.website.dialogs");
     
     var darkThemeEnabled = false;
 
     window.dashboard = exports;
+    window.dialogs = dialogs;
 
     exports.toggleTheme = function() {
         darkThemeEnabled = !darkThemeEnabled;

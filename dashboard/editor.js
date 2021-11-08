@@ -19,11 +19,9 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
     var resources = require("com.subnodal.nanoplay.website.resources");
     var dialogs = require("com.subnodal.nanoplay.website.dialogs");
     var communications = require("com.subnodal.nanoplay.website.communications");
-    var dashboard = require("com.subnodal.nanoplay.website.dashboard");
     var simulator = require("com.subnodal.nanoplay.website.simulator");
 
     window.editor = exports;
-    window.dialogs = dialogs;
 
     const SUPPORTED_LANGUAGES = ["en_GB", "fr_FR"];
     const DEFAULT_APP_ICON = "AAAAAAAAA////AAAf///YAAH///+AABAAAAgAAX/vgIAAEAAACAABe79wgAAQAAAIAAF+94CAABAAAAgAAW+/4IAAEAAACAABfvv4gAAQAAAIAAD///8AAAAAAAAAA==";
