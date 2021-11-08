@@ -829,7 +829,9 @@ body.dark .qrCode {
 #managerOptions div {
     width: 100%;
     max-height: 80vh;
+    margin-inline-start: -5px;
     margin-inline-end: calc(5vw - 1em);
+    padding-inline-start: 5px;
     padding-inline-end: 1em;
     overflow: auto;
 }
@@ -974,9 +976,11 @@ body.dark .qrCode {
         align-items: flex-start;
     }
 
-    #managerOptions .menu {
+    #managerOptions div {
         max-height: calc(100vh - 60vw - 5em);
+        margin-inline-start: 0;
         margin-inline-end: 0;
+        padding-inline-start: 10px;
     }
 }
 
