@@ -95,6 +95,14 @@ namespace("com.subnodal.nanoplay.website.manager", function(exports) {
         });
     };
 
+    exports.syncTime = function() {
+        exports.showLoading(_("manager_syncingTime"));
+
+        return currentNanoplay.setSystemDate().then(function() {
+            exports.hideLoading();
+        });
+    };
+
     exports.connect = function() {
         document.querySelector("#connectButton").textContent = _("connecting");
         document.querySelector("#connectButton").disabled = true;
