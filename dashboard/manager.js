@@ -24,6 +24,7 @@ namespace("com.subnodal.nanoplay.website.manager", function(exports) {
     var currentNanoplay = new nanoplay.NanoPlay();
     var loadedAppsList = {};
     var loadedFreeStorage = 0;
+    var backlightOn = true;
 
     exports.getCurrentPage = function() {
         return currentPage;
@@ -95,6 +96,46 @@ namespace("com.subnodal.nanoplay.website.manager", function(exports) {
         });
     };
 
+    exports.syncTime = function() {
+        exports.showLoading(_("manager_syncingTime"));
+
+        return currentNanoplay.setSystemDate().then(function() {
+            exports.hideLoading();
+        });
+    };
+
+    exports.getBacklight = function() {
+        return currentNanoplay.connection.evaluate(`require("config").properties.backlight;`).then(function(data) {
+            backlightOn = data;
+
+            subElements.render();
+
+            return Promise.resolve();
+        });
+    };
+
+    exports.getBacklightOn = function() {
+        return backlightOn;
+    };
+
+    exports.toggleBacklight = function() {
+        backlightOn = !backlightOn;
+
+        exports.showLoading();
+
+        return currentNanoplay.connection.evaluate([
+            `require("config").properties.backlight = ${backlightOn};`,
+            `LED.write(require("config").properties.backlight);`,
+            `require("config").save();`
+        ].join("\n")).then(function() {
+            subElements.render();
+
+            exports.hideLoading();
+
+            return Promise.resolve();
+        });
+    };
+
     exports.connect = function() {
         document.querySelector("#connectButton").textContent = _("connecting");
         document.querySelector("#connectButton").disabled = true;
@@ -106,6 +147,8 @@ namespace("com.subnodal.nanoplay.website.manager", function(exports) {
             document.querySelector("#connectError").textContent = "";
 
             return exports.getFreeStorage();
+        }).then(function() {
+            return exports.getBacklight();
         }).catch(function(error) {
             document.querySelector("#connectButton").textContent = _("connect");
             document.querySelector("#connectButton").disabled = false;
