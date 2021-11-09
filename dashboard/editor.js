@@ -392,6 +392,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                             simulatorInstance.loadProgram(cseInstance.code);
                             simulatorInstance.start();
                         });
+
+                        return;
                     }
 
                     document.getElementById("loadingCover").style.display = "none";
