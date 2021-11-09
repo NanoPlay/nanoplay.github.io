@@ -380,6 +380,8 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                         return;
                     }
 
+                    canAcceptCodeLoad = false;
+
                     if (core.parameter("id") != null) {
                         resources.getAppFromCloud(core.parameter("id")).then(function(data) {
                             cseInstance.code = data.code;
@@ -397,7 +399,6 @@ namespace("com.subnodal.nanoplay.website.editor", function(exports) {
                     }
 
                     document.getElementById("loadingCover").style.display = "none";
-                    canAcceptCodeLoad = false;
                 });
             });
 
