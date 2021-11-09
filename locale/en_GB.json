@@ -13,6 +13,7 @@
         "ok": "OK",
         "cancel": "Cancel",
         "done": "Done",
+        "back": "Back",
         "open": "Open",
         "edit": "Edit",
         "delete": "Delete",
@@ -21,6 +22,7 @@
         "upload": "Upload",
         "uploading": "Uploading...",
         "untitled": "Untitled",
+        "language": "Language",
 
         "signIn_title": "Let's go!",
         "signIn_description": "Sign in with your Subnodal Account to get coding! Your code, apps, settings and more will all be stored with your Subnodal Account for you to access from anywhere.",
@@ -77,6 +79,13 @@
         "manager_connectionError": "Looks like we couldn't connect to your NanoPlay! Try connecting again.",
         "manager_noBluetooth": "Unfortunately, this device doesn't have Bluetooth. Try using another device (such as a smartphone) instead.",
         "manager_storageInfo": "Storage {percentage}% full · {bytesFree} bytes free",
+        "manager_generalSettings": "General settings",
+        "manager_syncTime": "Sync current time",
+        "manager_setBacklight": {
+            "{state} == `true`": "Turn backlight off",
+            "{state} == `false`": "Turn backlight on"
+        },
+        "manager_installedApps": "Installed apps",
         "manager_noApps": "You have no apps on this NanoPlay.",
         "manager_applyingSetting": "Applying setting...",
         "manager_gettingApps": "Getting apps...",

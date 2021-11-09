@@ -61,11 +61,11 @@
                                 <h2>System update</h2>
                                 <p>Your NanoPlay is up-to-date on version 0.2.6!</p>
                                 <button data-preview="version">Apply update again</button>
-                                <h2>General settings</h2>
-                                <button onclick="manager.syncTime();" data-preview="syncTime">Sync current time</button>
-                                <button data-preview="backlightOn">Turn backlight off</button>
+                                <h2 translate>manager_generalSettings</h2>
+                                <button onclick="manager.syncTime();" data-preview="syncTime" translate>manager_syncTime</button>
+                                <button onclick="manager.toggleBacklight();" data-preview="{{ manager.getBacklightOn() ? 'backlightOn' : 'backlightOff' }}">{{ _("manager_setBacklight", {state: manager.getBacklightOn()}) }}</button>
                                 <label data-preview="language">
-                                    <span>Language</span>
+                                    <span translate>language</span>
                                     <select>
                                         <option value="en_GB">English (United Kingdom)</option>
                                         <option value="fr_FR">Français (France)</option>
@@ -73,8 +73,8 @@
                                 </label>
                             </s-if>
                             <s-if condition="{{ manager.getCurrentPage() == manager.pages.APPS }}">
-                                <button onclick="manager.setCurrentPage(manager.pages.GENERAL);" class="back">Back</button>
-                                <h2>Installed apps</h2>
+                                <button onclick="manager.setCurrentPage(manager.pages.GENERAL);" class="back" translate>back</button>
+                                <h2 translate>manager_installedApps</h2>
                                 <s-each in="manager.getLoadedAppsList()" keyvar="appId" valuevar="appManifest">
                                     <div class="app">
                                         <strong>{{ appManifest.name[l10n.getLocaleCode()] || _("untitled") }}</strong>
